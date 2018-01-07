@@ -65,7 +65,8 @@ fastlane/screenshots
 fastlane/test_output
 
 SmartShuffle/SupportingFiles/GoogleService-Info.plist
-
+SmartShuffle/SupportingFiles/Info.plist
+SmartShuffle/SupportingFiles/Keys.plist
 
 SmartShuffle/GoogleService-Info.plist
 CrashReportingKey/ServiceAccount.json
