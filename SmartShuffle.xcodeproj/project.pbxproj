@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2918CBB22002ADC70003A5AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBB12002ADC70003A5AA /* AppDelegate.swift */; };
-		2918CBB42002ADC70003A5AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBB32002ADC70003A5AA /* ViewController.swift */; };
 		2918CBB72002ADC70003A5AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2918CBB52002ADC70003A5AA /* Main.storyboard */; };
 		2918CBBA2002ADC70003A5AA /* SmartShuffle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBB82002ADC70003A5AA /* SmartShuffle.xcdatamodeld */; };
 		2918CBBC2002ADC70003A5AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2918CBBB2002ADC70003A5AA /* Assets.xcassets */; };
 		2918CBBF2002ADC70003A5AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2918CBBD2002ADC70003A5AA /* LaunchScreen.storyboard */; };
 		2918CBCA2002ADC70003A5AA /* SmartShuffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */; };
+		29EC9DD0200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
+		29EC9DD1200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +30,6 @@
 /* Begin PBXFileReference section */
 		2918CBAE2002ADC70003A5AA /* SmartShuffle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShuffle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2918CBB12002ADC70003A5AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2918CBB32002ADC70003A5AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2918CBB62002ADC70003A5AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2918CBB92002ADC70003A5AA /* SmartShuffle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartShuffle.xcdatamodel; sourceTree = "<group>"; };
 		2918CBBB2002ADC70003A5AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +38,7 @@
 		2918CBC52002ADC70003A5AA /* SmartShuffleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartShuffleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartShuffleTests.swift; sourceTree = "<group>"; };
 		2918CBCB2002ADC70003A5AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +112,7 @@
 		2918CBD52002B2470003A5AA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2918CBB32002ADC70003A5AA /* ViewController.swift */,
+				29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -242,8 +243,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2918CBB42002ADC70003A5AA /* ViewController.swift in Sources */,
 				2918CBB22002ADC70003A5AA /* AppDelegate.swift in Sources */,
+				29EC9DD0200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */,
 				2918CBBA2002ADC70003A5AA /* SmartShuffle.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29EC9DD1200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */,
 				2918CBCA2002ADC70003A5AA /* SmartShuffleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,6 +402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8YZSQZRNW;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartShuffle/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthewhsingleton.SmartShuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -415,6 +418,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8YZSQZRNW;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartShuffle/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthewhsingleton.SmartShuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
