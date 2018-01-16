@@ -76,29 +76,29 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="QLc-yL-lJV">
-                                <rect key="frame" x="25" y="376" width="325" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="QLc-yL-lJV">
+                                <rect key="frame" x="25" y="376" width="325" height="25"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Bc-xX-nj5">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                        <state key="normal" title="Rev"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Bc-xX-nj5">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <state key="normal" image="rewind"/>
                                         <connections>
                                             <action selector="reverseButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6Q-kS-oTP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JT3-hm-ip8">
-                                        <rect key="frame" x="148" y="0.0" width="29.5" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JT3-hm-ip8">
+                                        <rect key="frame" x="150.5" y="0.0" width="24.5" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="JT3-hm-ip8" secondAttribute="height" multiplier="1:1" id="hiu-4K-RMf"/>
                                         </constraints>
-                                        <state key="normal" title="Play"/>
+                                        <state key="normal" image="play"/>
                                         <connections>
                                             <action selector="playPauseButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iRa-KA-e1y"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNH-FH-0Tl">
-                                        <rect key="frame" x="295" y="0.0" width="30" height="30"/>
-                                        <state key="normal" title="For"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNH-FH-0Tl">
+                                        <rect key="frame" x="300" y="0.0" width="25" height="25"/>
+                                        <state key="normal" image="forward"/>
                                         <connections>
                                             <action selector="forwardButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-FK-EiS"/>
                                         </connections>
@@ -112,27 +112,27 @@
                                 </constraints>
                             </stackView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="4ZD-wy-sYt">
-                                <rect key="frame" x="73" y="421" width="229" height="31"/>
+                                <rect key="frame" x="73" y="416" width="229" height="31"/>
                             </slider>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="YlS-H4-zl2">
-                                <rect key="frame" x="25" y="501" width="325" height="18.5"/>
+                                <rect key="frame" x="25" y="496" width="325" height="23.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lK2-FW-RmQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="102" height="18.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="102" height="23.5"/>
                                         <state key="normal" title="Stay On Album"/>
                                         <connections>
                                             <action selector="stayOnAlbumButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YpA-L4-5J9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-s2-vkF">
-                                        <rect key="frame" x="112" y="0.0" width="101.5" height="18.5"/>
+                                        <rect key="frame" x="112" y="0.0" width="101.5" height="23.5"/>
                                         <state key="normal" title="Stay on Artist"/>
                                         <connections>
                                             <action selector="stayOnArtistButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="exB-ac-c2L"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeL-2N-i20">
-                                        <rect key="frame" x="223" y="0.0" width="102" height="18.5"/>
+                                        <rect key="frame" x="223" y="0.0" width="102" height="23.5"/>
                                         <state key="normal" title="Stay on Genre"/>
                                         <connections>
                                             <action selector="stayOnGenreButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fjj-z5-8G8"/>
@@ -214,4 +214,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="forward" width="25" height="25"/>
+        <image name="play" width="25" height="25"/>
+        <image name="rewind" width="25" height="25"/>
+    </resources>
 </document>
