@@ -28,7 +28,9 @@ class MediaPlayerViewController: UIViewController {
   @IBOutlet weak var stayOnAlbumButton: UIButton!
   @IBOutlet weak var stayOnArtistButton: UIButton!
   @IBOutlet weak var stayOnGenreButton: UIButton!
-  @IBOutlet weak var sourceButton: UIButton!
+  @IBOutlet weak var sourceStackView: UIStackView!
+  @IBOutlet weak var sourceIconButton: UIButton!
+  @IBOutlet weak var sourceLabelButton: UIButton!
   
   
   override func viewDidLoad() {
@@ -72,8 +74,14 @@ class MediaPlayerViewController: UIViewController {
   
   // MARK: - Source Action
   
-  @IBAction func sourceButtonTapped(_ sender: UIButton) {
+  @IBAction func sourceIconButtonTapped(_ sender: UIButton) {
+    
   }
+  
+  @IBAction func sourceLabelButtonTapped(_ sender: UIButton) {
+    
+  }
+  
   
   
   

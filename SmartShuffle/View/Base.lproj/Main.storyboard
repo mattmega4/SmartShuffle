@@ -116,24 +116,24 @@
                                 <rect key="frame" x="33" y="456" width="309" height="31"/>
                             </slider>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="YlS-H4-zl2">
-                                <rect key="frame" x="25" y="536" width="325" height="6"/>
+                                <rect key="frame" x="25" y="536" width="325" height="21"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lK2-FW-RmQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="102" height="6"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="102" height="21"/>
                                         <state key="normal" title="Stay On Album"/>
                                         <connections>
                                             <action selector="stayOnAlbumButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YpA-L4-5J9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-s2-vkF">
-                                        <rect key="frame" x="112" y="0.0" width="101.5" height="6"/>
+                                        <rect key="frame" x="112" y="0.0" width="101.5" height="21"/>
                                         <state key="normal" title="Stay on Artist"/>
                                         <connections>
                                             <action selector="stayOnArtistButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="exB-ac-c2L"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeL-2N-i20">
-                                        <rect key="frame" x="223" y="0.0" width="102" height="6"/>
+                                        <rect key="frame" x="223" y="0.0" width="102" height="21"/>
                                         <state key="normal" title="Stay on Genre"/>
                                         <connections>
                                             <action selector="stayOnGenreButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fjj-z5-8G8"/>
@@ -147,26 +147,40 @@
                                     <constraint firstItem="DSu-s2-vkF" firstAttribute="height" secondItem="lK2-FW-RmQ" secondAttribute="height" id="txR-rx-l0t"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yf7-ck-7qT">
-                                <rect key="frame" x="162" y="592" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Swb-YZ-M3J"/>
-                                    <constraint firstAttribute="width" constant="50" id="taB-Iy-sDE"/>
-                                </constraints>
-                                <state key="normal" title="Source"/>
-                                <connections>
-                                    <action selector="sourceButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V9b-Cv-hmF"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Lni-7o-4BD">
+                                <rect key="frame" x="98.5" y="607" width="178" height="35"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yf7-ck-7qT">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="2x1-ye-mKY"/>
+                                            <constraint firstAttribute="height" constant="35" id="wiP-Il-F6Z"/>
+                                        </constraints>
+                                        <state key="normal" title="&amp;">
+                                            <color key="titleColor" red="1" green="0.20392156859999999" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sourceIconButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X5i-xh-g4W"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyP-pi-Mzy">
+                                        <rect key="frame" x="50" y="0.0" width="128" height="35"/>
+                                        <state key="normal" title="Matthew's Airpods"/>
+                                        <connections>
+                                            <action selector="sourceLabelButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xgj-PN-WKP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dQE-sa-5dN" firstAttribute="top" secondItem="G8n-Fu-UQn" secondAttribute="bottom" constant="5" id="0iF-8R-qJB"/>
                             <constraint firstItem="YlS-H4-zl2" firstAttribute="top" secondItem="4ZD-wy-sYt" secondAttribute="bottom" constant="50" id="3Os-6q-Ad6"/>
                             <constraint firstItem="GWO-H8-l8d" firstAttribute="top" secondItem="G8n-Fu-UQn" secondAttribute="bottom" constant="5" id="4jy-PQ-ylf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Yf7-ck-7qT" secondAttribute="bottom" constant="25" id="6mw-ra-Xua"/>
-                            <constraint firstItem="Yf7-ck-7qT" firstAttribute="top" secondItem="YlS-H4-zl2" secondAttribute="bottom" constant="50" id="7iL-g8-qQd"/>
+                            <constraint firstItem="Lni-7o-4BD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8No-0t-lNf"/>
                             <constraint firstItem="izK-BS-ple" firstAttribute="top" secondItem="dQE-sa-5dN" secondAttribute="bottom" constant="25" id="AlE-Qd-lCz"/>
+                            <constraint firstItem="Lni-7o-4BD" firstAttribute="top" secondItem="YlS-H4-zl2" secondAttribute="bottom" constant="50" id="CEN-pz-H7k"/>
                             <constraint firstItem="d1o-C6-TEE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="DEH-e5-5Sk"/>
                             <constraint firstItem="izK-BS-ple" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="EYl-TP-nzU"/>
                             <constraint firstItem="QLc-yL-lJV" firstAttribute="top" secondItem="izK-BS-ple" secondAttribute="bottom" constant="25" id="HfE-ID-bKh"/>
@@ -183,8 +197,8 @@
                             <constraint firstItem="4ZD-wy-sYt" firstAttribute="leading" secondItem="QLc-yL-lJV" secondAttribute="leading" id="hi6-ij-Kti"/>
                             <constraint firstItem="G8n-Fu-UQn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="45" id="kbF-Bp-Z0p"/>
                             <constraint firstItem="QLc-yL-lJV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="35" id="kr4-CN-kz7"/>
-                            <constraint firstItem="Yf7-ck-7qT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="meg-2h-8bQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d1o-C6-TEE" secondAttribute="trailing" id="srB-Bi-wIf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Lni-7o-4BD" secondAttribute="bottom" constant="25" id="uAp-sS-Ec9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="izK-BS-ple" secondAttribute="trailing" constant="50" id="xgf-S0-66I"/>
                             <constraint firstItem="YlS-H4-zl2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="y03-wp-BH5"/>
                         </constraints>
@@ -205,7 +219,9 @@
                         <outlet property="songTimeElapsedLabel" destination="dQE-sa-5dN" id="Qcy-M5-dWO"/>
                         <outlet property="songTimeRemainingLabel" destination="GWO-H8-l8d" id="EIw-Sa-OCo"/>
                         <outlet property="songVolumeSlider" destination="4ZD-wy-sYt" id="TiG-bg-lAQ"/>
-                        <outlet property="sourceButton" destination="Yf7-ck-7qT" id="gkn-s0-wsm"/>
+                        <outlet property="sourceIconButton" destination="Yf7-ck-7qT" id="eYf-Ag-awf"/>
+                        <outlet property="sourceLabelButton" destination="lyP-pi-Mzy" id="isA-LZ-abR"/>
+                        <outlet property="sourceStackView" destination="Lni-7o-4BD" id="8p9-9k-SHT"/>
                         <outlet property="stayOnAlbumButton" destination="lK2-FW-RmQ" id="jVA-LY-thc"/>
                         <outlet property="stayOnArtistButton" destination="DSu-s2-vkF" id="q2s-1k-5pN"/>
                         <outlet property="stayOnGenreButton" destination="oeL-2N-i20" id="aEx-Vv-bwV"/>
