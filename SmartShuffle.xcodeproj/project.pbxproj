@@ -13,8 +13,11 @@
 		2918CBBC2002ADC70003A5AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2918CBBB2002ADC70003A5AA /* Assets.xcassets */; };
 		2918CBBF2002ADC70003A5AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2918CBBD2002ADC70003A5AA /* LaunchScreen.storyboard */; };
 		2918CBCA2002ADC70003A5AA /* SmartShuffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */; };
+		29968657200E8BD70009461E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29968656200E8BD60009461E /* GoogleService-Info.plist */; };
 		29EC9DD0200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
 		29EC9DD1200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
+		8910E92FABEC287AA5C87DEA /* Pods_SmartShuffleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DD4360BC20033A9B3E7E6 /* Pods_SmartShuffleTests.framework */; };
+		FF0BB33F51DCD68699449279 /* Pods_SmartShuffle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 133CA3A98D315093764333FD /* Pods_SmartShuffle.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		133CA3A98D315093764333FD /* Pods_SmartShuffle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartShuffle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2013E07999FEE091E90993D0 /* Pods-SmartShuffle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartShuffle.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartShuffle/Pods-SmartShuffle.release.xcconfig"; sourceTree = "<group>"; };
 		2918CBAE2002ADC70003A5AA /* SmartShuffle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShuffle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2918CBB12002ADC70003A5AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2918CBB62002ADC70003A5AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +43,12 @@
 		2918CBC52002ADC70003A5AA /* SmartShuffleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartShuffleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartShuffleTests.swift; sourceTree = "<group>"; };
 		2918CBCB2002ADC70003A5AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29968656200E8BD60009461E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
+		A48BB2EF0EA5495CA532CC92 /* Pods-SmartShuffleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartShuffleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A4BD37ACFB036DCA22981FE6 /* Pods-SmartShuffleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartShuffleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests.release.xcconfig"; sourceTree = "<group>"; };
+		B46A19CBF777C04E2817F16F /* Pods-SmartShuffle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartShuffle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartShuffle/Pods-SmartShuffle.debug.xcconfig"; sourceTree = "<group>"; };
+		C48DD4360BC20033A9B3E7E6 /* Pods_SmartShuffleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartShuffleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0BB33F51DCD68699449279 /* Pods_SmartShuffle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,18 +64,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8910E92FABEC287AA5C87DEA /* Pods_SmartShuffleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D2265B300091AB0CFABC03E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B46A19CBF777C04E2817F16F /* Pods-SmartShuffle.debug.xcconfig */,
+				2013E07999FEE091E90993D0 /* Pods-SmartShuffle.release.xcconfig */,
+				A48BB2EF0EA5495CA532CC92 /* Pods-SmartShuffleTests.debug.xcconfig */,
+				A4BD37ACFB036DCA22981FE6 /* Pods-SmartShuffleTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2918CBA52002ADC70003A5AA = {
 			isa = PBXGroup;
 			children = (
 				2918CBB02002ADC70003A5AA /* SmartShuffle */,
 				2918CBC82002ADC70003A5AA /* SmartShuffleTests */,
 				2918CBAF2002ADC70003A5AA /* Products */,
+				1D2265B300091AB0CFABC03E /* Pods */,
+				827410C25076289B8402F57D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +130,7 @@
 				2918CBBB2002ADC70003A5AA /* Assets.xcassets */,
 				2918CBBD2002ADC70003A5AA /* LaunchScreen.storyboard */,
 				2918CBC02002ADC70003A5AA /* Info.plist */,
+				29968656200E8BD60009461E /* GoogleService-Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -140,6 +166,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		827410C25076289B8402F57D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				133CA3A98D315093764333FD /* Pods_SmartShuffle.framework */,
+				C48DD4360BC20033A9B3E7E6 /* Pods_SmartShuffleTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +182,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2918CBCE2002ADC70003A5AA /* Build configuration list for PBXNativeTarget "SmartShuffle" */;
 			buildPhases = (
+				13A3A0BB45BBBF246668BD6B /* [CP] Check Pods Manifest.lock */,
 				2918CBAA2002ADC70003A5AA /* Sources */,
 				2918CBAB2002ADC70003A5AA /* Frameworks */,
 				2918CBAC2002ADC70003A5AA /* Resources */,
+				8FB2C8D6AFDEA0C64F1989A8 /* [CP] Embed Pods Frameworks */,
+				EF081252B9ADBEC8D93B22D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -164,9 +202,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2918CBD12002ADC70003A5AA /* Build configuration list for PBXNativeTarget "SmartShuffleTests" */;
 			buildPhases = (
+				83F0CE0611B3DF23751B746B /* [CP] Check Pods Manifest.lock */,
 				2918CBC12002ADC70003A5AA /* Sources */,
 				2918CBC22002ADC70003A5AA /* Frameworks */,
 				2918CBC32002ADC70003A5AA /* Resources */,
+				AB6179B94F5C294EA8E09131 /* [CP] Embed Pods Frameworks */,
+				185AE5FBC918B9087875D74B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2918CBBF2002ADC70003A5AA /* LaunchScreen.storyboard in Resources */,
+				29968657200E8BD70009461E /* GoogleService-Info.plist in Resources */,
 				2918CBBC2002ADC70003A5AA /* Assets.xcassets in Resources */,
 				2918CBB72002ADC70003A5AA /* Main.storyboard in Resources */,
 			);
@@ -237,6 +279,110 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13A3A0BB45BBBF246668BD6B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartShuffle-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		185AE5FBC918B9087875D74B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83F0CE0611B3DF23751B746B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartShuffleTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FB2C8D6AFDEA0C64F1989A8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffle/Pods-SmartShuffle-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffle/Pods-SmartShuffle-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB6179B94F5C294EA8E09131 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF081252B9ADBEC8D93B22D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffle/Pods-SmartShuffle-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2918CBAA2002ADC70003A5AA /* Sources */ = {
@@ -397,6 +543,7 @@
 		};
 		2918CBCF2002ADC70003A5AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B46A19CBF777C04E2817F16F /* Pods-SmartShuffle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -413,6 +560,7 @@
 		};
 		2918CBD02002ADC70003A5AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2013E07999FEE091E90993D0 /* Pods-SmartShuffle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -429,6 +577,7 @@
 		};
 		2918CBD22002ADC70003A5AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A48BB2EF0EA5495CA532CC92 /* Pods-SmartShuffleTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -446,6 +595,7 @@
 		};
 		2918CBD32002ADC70003A5AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4BD37ACFB036DCA22981FE6 /* Pods-SmartShuffleTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

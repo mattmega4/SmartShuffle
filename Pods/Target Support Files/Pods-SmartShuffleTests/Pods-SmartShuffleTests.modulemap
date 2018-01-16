@@ -1,0 +1,6 @@
+framework module Pods_SmartShuffleTests {
+  umbrella header "Pods-SmartShuffleTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
