@@ -10,29 +10,30 @@ import UIKit
 
 class MediaPlayerViewController: UIViewController {
   
-  
   @IBOutlet weak var albumArtImageView: UIImageView!
-  @IBOutlet weak var songProgressionProgressView: UIProgressView!
-  @IBOutlet weak var songTimeElapsedLabel: UILabel!
+  @IBOutlet weak var songProgressView: UIProgressView!
+  @IBOutlet weak var songTimePlayedLabel: UILabel!
   @IBOutlet weak var songTimeRemainingLabel: UILabel!
-  @IBOutlet weak var songDetailLabelsStackView: UIStackView!
   @IBOutlet weak var songNameLabel: UILabel!
   @IBOutlet weak var songArtistLabel: UILabel!
   @IBOutlet weak var songAlbumLabel: UILabel!
-  @IBOutlet weak var songControlsStackView: UIStackView!
-  @IBOutlet weak var reverseButton: UIButton!
-  @IBOutlet weak var playPauseButton: UIButton!
-  @IBOutlet weak var forwardButton: UIButton!
+  @IBOutlet weak var rewindSongButton: UIButton!
+  @IBOutlet weak var playPauseSongButton: UIButton!
+  @IBOutlet weak var forwardSongButton: UIButton!
+  @IBOutlet weak var volumeLessIconImageView: UIImageView!
   @IBOutlet weak var songVolumeSlider: UISlider!
-  @IBOutlet weak var smartShuffleButtonsStackView: UIStackView!
-  @IBOutlet weak var stayOnAlbumButton: UIButton!
-  @IBOutlet weak var stayOnArtistButton: UIButton!
-  @IBOutlet weak var stayOnGenreButton: UIButton!
-  @IBOutlet weak var sourceStackView: UIStackView!
-  @IBOutlet weak var sourceIconButton: UIButton!
-  @IBOutlet weak var sourceLabelButton: UIButton!
+  @IBOutlet weak var volumeMoreIconImageView: UIImageView!
+  @IBOutlet weak var audioSourceStackView: UIStackView!
+  @IBOutlet weak var audioSourceIconButton: UIButton!
+  @IBOutlet weak var audioSourceLabelButton: UIButton!
+  @IBOutlet weak var albumLockIconButton: UIButton!
+  @IBOutlet weak var albumLockLabelButton: UIButton!
+  @IBOutlet weak var artistLockIconButton: UIButton!
+  @IBOutlet weak var artistLockLabelButton: UIButton!
+  @IBOutlet weak var genreLockIconButton: UIButton!
+  @IBOutlet weak var genreLockLabelButton: UIButton!
   
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -50,41 +51,41 @@ class MediaPlayerViewController: UIViewController {
   
   // MARK: - Song Control Button Actions
   
-  @IBAction func reverseButtonTapped(_ sender: UIButton) {
+  @IBAction func rewindSongButtonTapped(_ sender: UIButton) {
     
   }
   
-  @IBAction func playPauseButtonTapped(_ sender: UIButton) {
+  @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     
   }
   
-  @IBAction func forwardButtonTapped(_ sender: UIButton) {
+  @IBAction func forwardSongButtonTapped(_ sender: UIButton) {
+    
+  }
+  
+  // MARK: - Audio Source Action
+  
+  @IBAction func audioSourceButtonTapped(_ sender: UIButton) {
     
   }
   
   // MARK: - Smart Shuffle Button Actions
   
-  @IBAction func stayOnAlbumButtonTapped(_ sender: UIButton) {
+  @IBAction func albumLockButtonTapped(_ sender: UIButton) {
     
   }
   
-  @IBAction func stayOnArtistButtonTapped(_ sender: UIButton) {
+  @IBAction func artistLockButtonTapped(_ sender: UIButton) {
     
   }
   
-  @IBAction func stayOnGenreButtonTapped(_ sender: UIButton) {
+  @IBAction func genreLockButtonTapped(_ sender: UIButton) {
     
   }
   
-  // MARK: - Source Action
+
   
-  @IBAction func sourceIconButtonTapped(_ sender: UIButton) {
-    
-  }
-  
-  @IBAction func sourceLabelButtonTapped(_ sender: UIButton) {
-    
-  }
+
   
   
   
