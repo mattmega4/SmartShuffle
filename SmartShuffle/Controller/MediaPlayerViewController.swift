@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class MediaPlayerViewController: UIViewController {
   
   @IBOutlet weak var albumArtImageView: UIImageView!
@@ -44,6 +46,8 @@ class MediaPlayerViewController: UIViewController {
   }
   
 
+  
+  
   
   
   

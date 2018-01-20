@@ -112,6 +112,7 @@
 				2918CBD62002B2490003A5AA /* View */,
 				2918CBD52002B2470003A5AA /* Controller */,
 				2918CBD42002B2450003A5AA /* SupportingFiles */,
+				293E56AB2011B8B8004A4D40 /* Structs */,
 				2918CBD82002B2620003A5AA /* Extensions */,
 			);
 			path = SmartShuffle;
@@ -168,6 +169,13 @@
 				293FCBDE2011586B00CE995C /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		293E56AB2011B8B8004A4D40 /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Structs;
 			sourceTree = "<group>";
 		};
 		827410C25076289B8402F57D /* Frameworks */ = {
