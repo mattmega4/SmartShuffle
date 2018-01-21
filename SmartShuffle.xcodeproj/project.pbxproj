@@ -15,6 +15,7 @@
 		2918CBCA2002ADC70003A5AA /* SmartShuffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */; };
 		293FCBDF2011586B00CE995C /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293FCBDE2011586B00CE995C /* UIView+Extensions.swift */; };
 		293FCBE02011586B00CE995C /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293FCBDE2011586B00CE995C /* UIView+Extensions.swift */; };
+		29864011201456F800D20EA9 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29864010201456F800D20EA9 /* MediaManager.swift */; };
 		29968657200E8BD70009461E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29968656200E8BD60009461E /* GoogleService-Info.plist */; };
 		29EC9DD0200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
 		29EC9DD1200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */; };
@@ -46,6 +47,7 @@
 		2918CBC92002ADC70003A5AA /* SmartShuffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartShuffleTests.swift; sourceTree = "<group>"; };
 		2918CBCB2002ADC70003A5AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		293FCBDE2011586B00CE995C /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		29864010201456F800D20EA9 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		29968656200E8BD60009461E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29EC9DCF200DECAE00AD9BEF /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
 		A48BB2EF0EA5495CA532CC92 /* Pods-SmartShuffleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartShuffleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +114,6 @@
 				2918CBD62002B2490003A5AA /* View */,
 				2918CBD52002B2470003A5AA /* Controller */,
 				2918CBD42002B2450003A5AA /* SupportingFiles */,
-				293E56AB2011B8B8004A4D40 /* Structs */,
 				2918CBD82002B2620003A5AA /* Extensions */,
 			);
 			path = SmartShuffle;
@@ -159,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				2918CBB82002ADC70003A5AA /* SmartShuffle.xcdatamodeld */,
+				29864010201456F800D20EA9 /* MediaManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,13 +171,6 @@
 				293FCBDE2011586B00CE995C /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		293E56AB2011B8B8004A4D40 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Structs;
 			sourceTree = "<group>";
 		};
 		827410C25076289B8402F57D /* Frameworks */ = {
@@ -244,6 +239,11 @@
 					2918CBAD2002ADC70003A5AA = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					2918CBC42002ADC70003A5AA = {
 						CreatedOnToolsVersion = 9.2;
@@ -405,6 +405,7 @@
 				29EC9DD0200DECAE00AD9BEF /* MediaPlayerViewController.swift in Sources */,
 				293FCBDF2011586B00CE995C /* UIView+Extensions.swift in Sources */,
 				2918CBBA2002ADC70003A5AA /* SmartShuffle.xcdatamodeld in Sources */,
+				29864011201456F800D20EA9 /* MediaManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8YZSQZRNW;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartShuffle/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthewhsingleton.SmartShuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -580,7 +581,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8YZSQZRNW;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartShuffle/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthewhsingleton.SmartShuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
