@@ -14,7 +14,7 @@ import AVFoundation
 class MediaPlayerViewController: UIViewController {
   
   @IBOutlet weak var albumArtImageView: UIImageView!
-
+  @IBOutlet weak var songProgressView: UIProgressView!
   @IBOutlet weak var songProgressSlider: UISlider!
   @IBOutlet weak var songTimePlayedLabel: UILabel!
   @IBOutlet weak var songTimeRemainingLabel: UILabel!
@@ -181,6 +181,11 @@ class MediaPlayerViewController: UIViewController {
   
   
   // MARK: - Audio Source Action
+  
+  @IBAction func volumeSliderDragged(_ sender: UISlider) {
+    
+  }
+  
   
   @IBAction func audioSourceButtonTapped(_ sender: UIButton) {
     

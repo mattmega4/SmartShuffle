@@ -135,6 +135,9 @@
                                 <rect key="frame" x="73" y="363" width="174" height="31"/>
                                 <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="volumeSliderDragged:" destination="KEz-4c-IP3" eventType="valueChanged" id="7QF-Tc-a5E"/>
+                                </connections>
                             </slider>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="volumeMoreIconLight" translatesAutoresizingMaskIntoConstraints="NO" id="RXk-X8-3gV">
                                 <rect key="frame" x="260" y="370.5" width="15" height="15"/>
@@ -234,6 +237,9 @@
                                     <action selector="genreLockButtonTapped:" destination="KEz-4c-IP3" eventType="touchUpInside" id="cqw-DT-itq"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7af-Sh-6MM">
+                                <rect key="frame" x="45" y="152" width="230" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -247,6 +253,7 @@
                             <constraint firstItem="OJE-6i-tss" firstAttribute="centerX" secondItem="bTi-z2-6Ov" secondAttribute="centerX" id="Gtc-Ib-XLD"/>
                             <constraint firstItem="5QH-Rt-SeM" firstAttribute="centerY" secondItem="os6-I5-BrP" secondAttribute="centerY" id="Hb3-HZ-xoN"/>
                             <constraint firstItem="ZCB-0e-0FP" firstAttribute="width" secondItem="jqN-4E-ZRc" secondAttribute="width" id="I1O-KA-YNz"/>
+                            <constraint firstItem="7af-Sh-6MM" firstAttribute="top" secondItem="Z5A-Qe-8S1" secondAttribute="top" id="I5f-KA-5JB"/>
                             <constraint firstItem="ZCB-0e-0FP" firstAttribute="height" secondItem="jqN-4E-ZRc" secondAttribute="height" id="JJg-RY-TNj"/>
                             <constraint firstItem="leW-uv-I7G" firstAttribute="top" secondItem="UTd-zr-Cgc" secondAttribute="bottom" constant="10" id="KKO-aB-S7Y"/>
                             <constraint firstItem="yAZ-nB-Rgs" firstAttribute="width" secondItem="eFj-zb-ua7" secondAttribute="width" id="Ko3-a8-VxR"/>
@@ -254,8 +261,10 @@
                             <constraint firstItem="uEZ-eb-Coh" firstAttribute="top" secondItem="bZv-GZ-UQf" secondAttribute="top" constant="25" id="LvF-kc-7AM"/>
                             <constraint firstItem="yso-5g-nvq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="OJE-6i-tss" secondAttribute="bottom" constant="25" id="MKm-C7-APs"/>
                             <constraint firstItem="leW-uv-I7G" firstAttribute="centerY" secondItem="jqN-4E-ZRc" secondAttribute="centerY" id="MWJ-lY-OoG"/>
+                            <constraint firstItem="7af-Sh-6MM" firstAttribute="bottom" secondItem="Z5A-Qe-8S1" secondAttribute="bottom" id="NQM-G3-EmF"/>
                             <constraint firstItem="yAZ-nB-Rgs" firstAttribute="top" secondItem="nJp-Rw-4El" secondAttribute="bottom" constant="10" id="NXl-Ay-jUT"/>
                             <constraint firstItem="bZv-GZ-UQf" firstAttribute="trailing" secondItem="TQc-WX-KIS" secondAttribute="trailing" constant="45" id="PCL-FQ-L1T"/>
+                            <constraint firstItem="7af-Sh-6MM" firstAttribute="leading" secondItem="Z5A-Qe-8S1" secondAttribute="leading" id="QJS-Zb-yvb"/>
                             <constraint firstItem="OJE-6i-tss" firstAttribute="top" secondItem="voy-gF-9ll" secondAttribute="bottom" constant="30" id="QUD-jU-cbA"/>
                             <constraint firstItem="RXk-X8-3gV" firstAttribute="trailing" secondItem="5QH-Rt-SeM" secondAttribute="trailing" id="RRL-FS-00g"/>
                             <constraint firstItem="eFj-zb-ua7" firstAttribute="leading" secondItem="bZv-GZ-UQf" secondAttribute="leading" constant="25" id="TAE-iM-PT6"/>
@@ -268,6 +277,7 @@
                             <constraint firstItem="Z5A-Qe-8S1" firstAttribute="leading" secondItem="bZv-GZ-UQf" secondAttribute="leading" constant="45" id="XBZ-K2-9Ik"/>
                             <constraint firstItem="vbp-zX-ori" firstAttribute="trailing" secondItem="Z5A-Qe-8S1" secondAttribute="trailing" id="Zeh-Nb-fCI"/>
                             <constraint firstItem="UTd-zr-Cgc" firstAttribute="top" secondItem="yso-5g-nvq" secondAttribute="bottom" constant="45" id="aFg-is-ocP"/>
+                            <constraint firstItem="7af-Sh-6MM" firstAttribute="trailing" secondItem="Z5A-Qe-8S1" secondAttribute="trailing" id="aYc-2m-iVM"/>
                             <constraint firstItem="cFp-6N-4g6" firstAttribute="leading" secondItem="os6-I5-BrP" secondAttribute="leading" id="akT-Ge-hey"/>
                             <constraint firstItem="ZCB-0e-0FP" firstAttribute="centerY" secondItem="jqN-4E-ZRc" secondAttribute="centerY" id="cWA-RG-Vja"/>
                             <constraint firstItem="UTd-zr-Cgc" firstAttribute="centerY" secondItem="Oj7-Lk-GiM" secondAttribute="centerY" id="cd5-5r-BRm"/>
@@ -318,6 +328,7 @@
                         <outlet property="songArtistLabel" destination="nJp-Rw-4El" id="5pR-s1-PQA"/>
                         <outlet property="songNameLabel" destination="eFj-zb-ua7" id="h1c-yF-ZiZ"/>
                         <outlet property="songProgressSlider" destination="Z5A-Qe-8S1" id="rYJ-y6-rwM"/>
+                        <outlet property="songProgressView" destination="7af-Sh-6MM" id="TJB-zS-LAb"/>
                         <outlet property="songTimePlayedLabel" destination="3TJ-TD-ZLW" id="wpQ-Dr-3Mh"/>
                         <outlet property="songTimeRemainingLabel" destination="vbp-zX-ori" id="Nm4-F6-BEe"/>
                         <outlet property="songVolumeSlider" destination="OJE-6i-tss" id="N27-ta-dV0"/>
