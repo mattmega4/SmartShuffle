@@ -40,27 +40,15 @@ class MediaPlayerViewController: UIViewController {
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
-  
   let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-    try? AVAudioSession.sharedInstance().setActive(true)
+    
     // Do any additional setup after loading the view.
     
     albumArtImageView.createRoundedCorners()
-    MediaManager.shared.getAllSongs { (songs) in
-      guard let theSongs = songs else {
-        return
-      }
-      
-      self.newSongs = theSongs
-      self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
-      
-      self.mediaPlayer.shuffleMode = .songs
-      }
-    
+    setUpAudioPlayerAndGetSongsShuffled()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -69,33 +57,46 @@ class MediaPlayerViewController: UIViewController {
     // prev button disabled if no prev song
   }
   
-  func playNext() {
-    mediaPlayer.skipToNextItem()
+  func setUpAudioPlayerAndGetSongsShuffled() {
+    try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+    try? AVAudioSession.sharedInstance().setActive(true)
+    MediaManager.shared.getAllSongs { (songs) in
+      guard let theSongs = songs else {
+        return
+      }
+      self.newSongs = theSongs
+      self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
+      self.mediaPlayer.shuffleMode = .songs
+    }
+  }
+  
+  
+  func getCurrentlyPlayedInfo() {
+  
+    if let songTitle = mediaPlayer.nowPlayingItem?.title {
+      songNameLabel.text = songTitle
+    } else {
+      songNameLabel.text = ""
+    }
+    
+    if let songArtist = mediaPlayer.nowPlayingItem?.artist {
+      songArtistLabel.text = songArtist
+    } else {
+      songArtistLabel.text = ""
+    }
+    
+    if let songAlbum = mediaPlayer.nowPlayingItem?.albumTitle {
+      songAlbumLabel.text = songAlbum
+    } else {
+      songAlbumLabel.text = ""
+    }
+    
     if let artwork = mediaPlayer.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400)) {
       self.albumArtImageView.image = artwork
+    } else {
+      self.albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
     }
-    /*player = nil
-    let index = Int(arc4random_uniform(UInt32(newSongs.count)))
-    let song = newSongs[index]
-    self.currentSong = song
-    isPlaying ? play(item: song) : pause(item: song)
-    newSongs.remove(at: index)*/
   }
-  
-  func playPrevious() {
-    
-    /*player?.stop()
-    player = nil
-    //let index = Int(arc4random_uniform(UInt32(newSongs.count)))
-    let song = playedSongs.last
-    self.currentSong = song
-    if let theSong = song {
-      isPlaying ? play(item: theSong) : pause(item: theSong)
-    }*/
-  }
-  
-
-  
   
   
   
@@ -106,80 +107,22 @@ class MediaPlayerViewController: UIViewController {
   
   @IBAction func rewindSongButtonTapped(_ sender: UIButton) {
     mediaPlayer.skipToPreviousItem()
-    if let artwork = mediaPlayer.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400)) {
-      self.albumArtImageView.image = artwork
-    }
-    else {
-      self.albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
-    }
-    print("\(mediaPlayer.nowPlayingItem?.title)")
+    getCurrentlyPlayedInfo()
+  }
+  
+  
+  @IBAction func forwardSongButtonTapped(_ sender: UIButton) {
+    mediaPlayer.skipToNextItem()
+    getCurrentlyPlayedInfo()
   }
   
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
     isPlaying ? mediaPlayer.play() : mediaPlayer.pause()
-    if let artwork = mediaPlayer.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400)) {
-      self.albumArtImageView.image = artwork
-    }
-    else {
-      self.albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
-    }
-    print("\(mediaPlayer.nowPlayingItem?.title)")
-    /*if let song = currentSong {
-      isPlaying ? play(item: song) : pause(item: song)
-    }
-    else {
-      let index = Int(arc4random_uniform(UInt32(newSongs.count)))
-      let song = newSongs[index]
-      self.currentSong = song
-      isPlaying ? play(item: song) : pause(item: song)
-      newSongs.remove(at: index)
-    }*/
-    
+    getCurrentlyPlayedInfo()
   }
   
-  func play(item: MPMediaItem) {
-    /*print("\(item.title)")
-    if let thePlayer = player {
-      thePlayer.play()
-    }
-    else {*/
-      
-    
-      mediaPlayer.play()
-      
-     /* if let url = item.assetURL {
-        player = try? AVAudioPlayer(contentsOf: url)
-        player?.play()
-      }
-      else if let url = item.value(forProperty: MPMediaItemPropertyAssetURL) as? URL {
-        
-        player = try? AVAudioPlayer(contentsOf: url)
-        player?.play()
-      }
-      else {
-        print("klgjadsklgj")
-      }
-    }*/
-  }
-  
- /* func pause(item: MPMediaItem) {
-    //player?.pause()
-  }*/
-  
-  
-  @IBAction func forwardSongButtonTapped(_ sender: UIButton) {
-    mediaPlayer.skipToNextItem()
-    
-    if let artwork = mediaPlayer.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400)) {
-      self.albumArtImageView.image = artwork
-    }
-    else {
-      self.albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
-    }
-    print("\(mediaPlayer.nowPlayingItem?.title)")
-  }
   
   // MARK: - Audio Source Action
   
@@ -201,17 +144,26 @@ class MediaPlayerViewController: UIViewController {
     
   }
   
-
-  
-
-  
-  
-  
-  
-  
-  
   
 }
+
+// check if song ended to update title etc
+
+//func play(url: NSURL) {
+//  let item = AVPlayerItem(URL: url)
+//
+//  NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidFinishPlaying:", name: AVPlayerItemDidPlayToEndTimeNotification, object: item)
+//
+//  let player = AVPlayer(playerItem: item)
+//  player.play()
+//}
+//
+//func playerDidFinishPlaying(note: NSNotification) {
+//  // Your code here
+//}
+////Don't forget to remove the observer when you're done (or in deinit)!
+
+
 
 
 extension MediaPlayerViewController: AVAudioPlayerDelegate {
