@@ -14,7 +14,8 @@ import AVFoundation
 class MediaPlayerViewController: UIViewController {
   
   @IBOutlet weak var albumArtImageView: UIImageView!
-  @IBOutlet weak var songProgressView: UIProgressView!
+
+  @IBOutlet weak var songProgressSlider: UISlider!
   @IBOutlet weak var songTimePlayedLabel: UILabel!
   @IBOutlet weak var songTimeRemainingLabel: UILabel!
   @IBOutlet weak var songNameLabel: UILabel!
@@ -41,20 +42,39 @@ class MediaPlayerViewController: UIViewController {
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
   let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
+  var songTimer: Timer?
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    mediaPlayer.beginGeneratingPlaybackNotifications()
     // Do any additional setup after loading the view.
-    
+    NotificationCenter.default.addObserver(self, selector: #selector(songChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
     albumArtImageView.createRoundedCorners()
     setUpAudioPlayerAndGetSongsShuffled()
+    
+  }
+  
+  
+  @objc func songChanged(_ notification: Notification) {
+    songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
+    songProgressSlider.minimumValue = 0
+    songProgressSlider.value = 0
+//    songProgressSlider.minimumTrackTintColor = .white
+    songTimePlayedLabel.text = getTimeElapsed()
+    songTimeRemainingLabel.text = getTimeRemaining()
+    getCurrentlyPlayedInfo()
+  }
+  
+  func showUpdatedProgress() {
+    
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
     // prev button disabled if no prev song
+    
   }
   
   func setUpAudioPlayerAndGetSongsShuffled() {
@@ -68,6 +88,28 @@ class MediaPlayerViewController: UIViewController {
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
       self.mediaPlayer.shuffleMode = .songs
     }
+  }
+  
+  func getTimeRemaining() -> String {
+    let secondsRemaining = songProgressSlider.maximumValue - songProgressSlider.value
+    let minutes = Int(secondsRemaining / 60)
+    let seconds = Int (secondsRemaining - Float(60  * minutes))
+    return "\(minutes):\(seconds)"
+  }
+  
+  func getTimeElapsed() -> String {
+    let secondsElapsed = songProgressSlider.value
+    let minutes = Int(secondsElapsed / 60)
+    let seconds = Int (secondsElapsed - Float(60  * minutes))
+    return "\(minutes):\(seconds)"
+  }
+  
+  func updateCurrentPlaybackTime() {
+    let elapsedTime = mediaPlayer.currentPlaybackTime
+    songProgressSlider.value = Float(elapsedTime)
+    songTimePlayedLabel.text = getTimeElapsed()
+//    songProgressSlider.minimumTrackTintColor = .blue
+    songTimeRemainingLabel.text = getTimeRemaining()
   }
   
   
@@ -99,9 +141,15 @@ class MediaPlayerViewController: UIViewController {
   }
   
   
-  
-  
   // MARK: - IB Actions
+  
+  @IBAction func songProgressSliderDragged(_ sender: UISlider) {
+    mediaPlayer.currentPlaybackTime = Double(sender.value)
+  }
+  
+  // MARK: - Slider Action
+  
+  
   
   // MARK: - Song Control Button Actions
   
@@ -121,6 +169,14 @@ class MediaPlayerViewController: UIViewController {
     sender.isSelected = isPlaying
     isPlaying ? mediaPlayer.play() : mediaPlayer.pause()
     getCurrentlyPlayedInfo()
+    if isPlaying {
+      songTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+        self.updateCurrentPlaybackTime()
+      })
+    }
+    else {
+      songTimer?.invalidate()
+    }
   }
   
   
@@ -147,21 +203,6 @@ class MediaPlayerViewController: UIViewController {
   
 }
 
-// check if song ended to update title etc
-
-//func play(url: NSURL) {
-//  let item = AVPlayerItem(URL: url)
-//
-//  NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidFinishPlaying:", name: AVPlayerItemDidPlayToEndTimeNotification, object: item)
-//
-//  let player = AVPlayer(playerItem: item)
-//  player.play()
-//}
-//
-//func playerDidFinishPlaying(note: NSNotification) {
-//  // Your code here
-//}
-////Don't forget to remove the observer when you're done (or in deinit)!
 
 
 
@@ -173,5 +214,6 @@ extension MediaPlayerViewController: AVAudioPlayerDelegate {
   
   func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
     print("finished playing")
+    
   }
 }
