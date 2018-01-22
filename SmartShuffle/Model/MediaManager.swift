@@ -17,7 +17,6 @@ class MediaManager: NSObject {
   // MARK: - Get All Song Logic
   
   func getAllSongs(completion: @escaping (_ songs: [MPMediaItem]?) -> Void) {
-    
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
         let query = MPMediaQuery.songs()
