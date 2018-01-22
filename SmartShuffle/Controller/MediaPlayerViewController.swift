@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVFoundation
+import MBProgressHUD
 
 
 class MediaPlayerViewController: UIViewController {
@@ -46,23 +47,27 @@ class MediaPlayerViewController: UIViewController {
   let mediaPlayer = MPMusicPlayerApplicationController.systemMusicPlayer
   var songTimer: Timer?
   var firstLaunch = true
+  var lastPlayedItem: MPMediaItem?
   var volumeControlView = MPVolumeView()
+  var lockStatus = -1 // 0 artist 1 album 2 genre 3 all
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     mediaPlayer.beginGeneratingPlaybackNotifications()
-    // Do any additional setup after loading the view.
     NotificationCenter.default.addObserver(self, selector: #selector(songChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
     albumArtImageView.createRoundedCorners()
     setUpAudioPlayerAndGetSongsShuffled()
     clearSongInfo()
-    
-    songProgressSlider.addTarget(self, action: #selector(testingSlider(_:)), for: .valueChanged)
-//    volumeControlView = MPVolumeView(
-//    volumeView.addSubview(volumeControlView)
+    songProgressSlider.addTarget(self, action: #selector(playbackSlider(_:)), for: .valueChanged)
     volumeControlView.showsVolumeSlider = true
   }
+  
+//  override func viewWillDisappear(_ animated: Bool) {
+//    super.viewWillDisappear(animated)
+//    mediaPlayer.endGeneratingPlaybackNotifications()
+//  }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
@@ -70,34 +75,55 @@ class MediaPlayerViewController: UIViewController {
       let myVolumeView = MPVolumeView(frame: volumeView.bounds)
       volumeView.addSubview(myVolumeView)
     }
-//    volumeControlView.frame = volumeView.frame
   }
   
-  @objc func testingSlider(_ slider: UISlider) {
+  @objc func playbackSlider(_ slider: UISlider) {
     if slider == songProgressSlider {
       mediaPlayer.currentPlaybackTime = Double(slider.value)
-    }
-    else {
-     
     }
   }
   
   @objc func songChanged(_ notification: Notification) {
+    print("\(mediaPlayer.nowPlayingItem?.genre ?? "")")
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
     songProgressView.progress = 0
     songTimePlayedLabel.text = getTimeElapsed()
     songTimeRemainingLabel.text = getTimeRemaining()
-    
-    
+    //print("\(mediaPlayer.indexOfNowPlayingItem)")
     if !firstLaunch {
       getCurrentlyPlayedInfo()
-      rewindSongButton.isEnabled = true
-      firstLaunch = false
+      //rewindSongButton.isEnabled = true
     } else {
-      rewindSongButton.isEnabled = false
+      firstLaunch = false
+      //rewindSongButton.isEnabled = false
     }
+    rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
+    guard let currentItem = lastPlayedItem else {
+      return
+    }
+    if !playedSongs.contains(currentItem) {
+      playedSongs.append(currentItem)
+    }
+    if lockStatus == 2 {
+      lockStatus = -1
+     
+      let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: currentItem)
+      //genreQuery.items
+      mediaPlayer.setQueue(with: genreQuery)
+      //self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
+      self.mediaPlayer.shuffleMode = .songs
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+      MBProgressHUD.hide(for: self.view, animated: true)
+        self.mediaPlayer.play()
+      })
+    }
+    if lockStatus == 3 {
+      lockStatus = -1
+      setUpAudioPlayerAndGetSongsShuffled()
+    }
+    
   }
   
   func clearSongInfo() {
@@ -106,28 +132,24 @@ class MediaPlayerViewController: UIViewController {
     songArtistLabel.text = ""
     songAlbumLabel.text = ""
   }
-  
-  func showUpdatedProgress() {
-    
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    // prev button disabled if no prev song
-    
-  }
+
   
   func setUpAudioPlayerAndGetSongsShuffled() {
     try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
     try? AVAudioSession.sharedInstance().setActive(true)
+    MBProgressHUD.showAdded(to: view, animated: true)
     MediaManager.shared.getAllSongs { (songs) in
       guard let theSongs = songs else {
         return
       }
-      self.newSongs = theSongs
+      self.newSongs = theSongs.filter({ (item) -> Bool in
+        return !self.playedSongs.contains(item)
+      })
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
       self.mediaPlayer.shuffleMode = .songs
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+        MBProgressHUD.hide(for: self.view, animated: true)
+      })
     }
   }
   
@@ -184,16 +206,7 @@ class MediaPlayerViewController: UIViewController {
   
   
   // MARK: - IB Actions
-  
-  //  @IBAction func songProgressSliderDragged(_ sender: UISlider) {
-  //mediaPlayer.currentPlaybackTime = Double(sender.value)
-  //    print("Slider value changed")
-  //  }
-  
-  // MARK: - Slider Action
-  
-  
-  
+
   // MARK: - Song Control Button Actions
   
   @IBAction func rewindSongButtonTapped(_ sender: UIButton) {
@@ -210,7 +223,10 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
-    isPlaying ? mediaPlayer.play() : mediaPlayer.pause()
+    
+    //DispatchQueue.global().async {
+      self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
+    //}
     getCurrentlyPlayedInfo()
     if isPlaying {
       songTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
@@ -246,7 +262,15 @@ class MediaPlayerViewController: UIViewController {
   }
   
   @IBAction func genreLockButtonTapped(_ sender: UIButton) {
-    
+    sender.isSelected = !sender.isSelected
+    genreLockLabelButton.titleLabel?.font = sender.isSelected ? UIFont.boldSystemFont(ofSize: 15) : UIFont.systemFont(ofSize: 15)
+     
+    if !sender.isSelected {
+      lockStatus = 3
+      return
+    }
+    lastPlayedItem = mediaPlayer.nowPlayingItem
+    lockStatus = 2
   }
   
   

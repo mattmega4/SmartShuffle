@@ -28,6 +28,21 @@ class MediaManager: NSObject {
   }
   
   
+  //func getPermission(completion)
+  
+  
+  func getSongsWithCurrentGenreFor(item: MPMediaItem) -> MPMediaQuery {
+  
+    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    return query
+  }
+  
+  func removeLock() {
+    
+  }
+  
   
   
 
