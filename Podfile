@@ -7,8 +7,11 @@ target 'SmartShuffle' do
 
   # Pods for SmartShuffle
 
-	pod 'Firebase/Core'
+  pod 'Firebase/Core'
   pod 'MBProgressHUD'
+  pod 'Firebase/Performance'
+  pod 'Fabric', '~> 1.7.2'
+  pod 'Crashlytics', '~> 3.9.3'
 
 
   target 'SmartShuffleTests' do

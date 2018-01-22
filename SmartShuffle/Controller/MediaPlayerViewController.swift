@@ -26,19 +26,15 @@ class MediaPlayerViewController: UIViewController {
   @IBOutlet weak var playPauseSongButton: UIButton!
   @IBOutlet weak var forwardSongButton: UIButton!
   @IBOutlet weak var volumeLessIconImageView: UIImageView!
-  @IBOutlet weak var songVolumeSlider: UISlider!
-  
   @IBOutlet weak var volumeView: UIView!
   @IBOutlet weak var volumeMoreIconImageView: UIImageView!
-  @IBOutlet weak var audioSourceStackView: UIStackView!
-  @IBOutlet weak var audioSourceIconButton: UIButton!
-  @IBOutlet weak var audioSourceLabelButton: UIButton!
   @IBOutlet weak var albumLockIconButton: UIButton!
-  @IBOutlet weak var albumLockLabelButton: UIButton!
+  @IBOutlet weak var albumLockLabel: UILabel!
   @IBOutlet weak var artistLockIconButton: UIButton!
-  @IBOutlet weak var artistLockLabelButton: UIButton!
+  @IBOutlet weak var artistLockLabel: UILabel!
   @IBOutlet weak var genreLockIconButton: UIButton!
-  @IBOutlet weak var genreLockLabelButton: UIButton!
+  @IBOutlet weak var genreLockLabel: UILabel!
+  
   
   var isPlaying = false
   var newSongs = [MPMediaItem]()
@@ -49,7 +45,7 @@ class MediaPlayerViewController: UIViewController {
   var firstLaunch = true
   var lastPlayedItem: MPMediaItem?
   var volumeControlView = MPVolumeView()
-  var lockStatus = -1 // 0 artist 1 album 2 genre 3 all
+  var lockStatus = -1 // 0 artist, 1 album, 2 genre, 3 all
   
   
   override func viewDidLoad() {
@@ -64,11 +60,6 @@ class MediaPlayerViewController: UIViewController {
     volumeControlView.showsVolumeSlider = true
   }
   
-//  override func viewWillDisappear(_ animated: Bool) {
-//    super.viewWillDisappear(animated)
-//    mediaPlayer.endGeneratingPlaybackNotifications()
-//  }
-  
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     if volumeView.subviews.count == 0 {
@@ -77,62 +68,8 @@ class MediaPlayerViewController: UIViewController {
     }
   }
   
-  @objc func playbackSlider(_ slider: UISlider) {
-    if slider == songProgressSlider {
-      mediaPlayer.currentPlaybackTime = Double(slider.value)
-    }
-  }
   
-  @objc func songChanged(_ notification: Notification) {
-    print("\(mediaPlayer.nowPlayingItem?.genre ?? "")")
-    songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
-    songProgressSlider.minimumValue = 0
-    songProgressSlider.value = 0
-    songProgressView.progress = 0
-    songTimePlayedLabel.text = getTimeElapsed()
-    songTimeRemainingLabel.text = getTimeRemaining()
-    //print("\(mediaPlayer.indexOfNowPlayingItem)")
-    if !firstLaunch {
-      getCurrentlyPlayedInfo()
-      //rewindSongButton.isEnabled = true
-    } else {
-      firstLaunch = false
-      //rewindSongButton.isEnabled = false
-    }
-    rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
-    guard let currentItem = lastPlayedItem else {
-      return
-    }
-    if !playedSongs.contains(currentItem) {
-      playedSongs.append(currentItem)
-    }
-    if lockStatus == 2 {
-      lockStatus = -1
-     
-      let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: currentItem)
-      //genreQuery.items
-      mediaPlayer.setQueue(with: genreQuery)
-      //self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
-      self.mediaPlayer.shuffleMode = .songs
-      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
-      MBProgressHUD.hide(for: self.view, animated: true)
-        self.mediaPlayer.play()
-      })
-    }
-    if lockStatus == 3 {
-      lockStatus = -1
-      setUpAudioPlayerAndGetSongsShuffled()
-    }
-    
-  }
-  
-  func clearSongInfo() {
-    albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
-    songNameLabel.text = ""
-    songArtistLabel.text = ""
-    songAlbumLabel.text = ""
-  }
-
+  // MARK: - Initial Audio Player setup Logic
   
   func setUpAudioPlayerAndGetSongsShuffled() {
     try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -152,6 +89,66 @@ class MediaPlayerViewController: UIViewController {
       })
     }
   }
+  
+  
+  // MARK: - Playback Slider
+  
+  @objc func playbackSlider(_ slider: UISlider) {
+    if slider == songProgressSlider {
+      mediaPlayer.currentPlaybackTime = Double(slider.value)
+    }
+  }
+  
+  // MARK: - Logic for Song Change & NSNotification
+  
+  @objc func songChanged(_ notification: Notification) {
+    print("\(mediaPlayer.nowPlayingItem?.genre ?? "")")
+    songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
+    songProgressSlider.minimumValue = 0
+    songProgressSlider.value = 0
+    songProgressView.progress = 0
+    songTimePlayedLabel.text = getTimeElapsed()
+    songTimeRemainingLabel.text = getTimeRemaining()
+    
+    if !firstLaunch {
+      getCurrentlyPlayedInfo()
+    } else {
+      firstLaunch = false
+    }
+    rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
+    guard let currentItem = lastPlayedItem else {
+      return
+    }
+    if !playedSongs.contains(currentItem) {
+      playedSongs.append(currentItem)
+    }
+    if lockStatus == 2 {
+      lockStatus = -1
+      let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: currentItem)
+      mediaPlayer.setQueue(with: genreQuery)
+      self.mediaPlayer.shuffleMode = .songs
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+        MBProgressHUD.hide(for: self.view, animated: true)
+        self.mediaPlayer.play()
+      })
+    }
+    if lockStatus == 3 {
+      lockStatus = -1
+      setUpAudioPlayerAndGetSongsShuffled()
+    }
+  }
+  
+  // MARK: - Clear Song Info
+  
+  func clearSongInfo() {
+    albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
+    songNameLabel.text = ""
+    songArtistLabel.text = ""
+    songAlbumLabel.text = ""
+  }
+  
+  
+  // MARK: - Song Remaining & Duration Logic
   
   func getTimeRemaining() -> String {
     let secondsRemaining = songProgressSlider.maximumValue - songProgressSlider.value
@@ -176,6 +173,7 @@ class MediaPlayerViewController: UIViewController {
   }
   
   
+  // MARK: - Song Metadata Logic
   
   func getCurrentlyPlayedInfo() {
     
@@ -184,19 +182,16 @@ class MediaPlayerViewController: UIViewController {
     } else {
       songNameLabel.text = ""
     }
-    
     if let songArtist = mediaPlayer.nowPlayingItem?.artist {
       songArtistLabel.text = songArtist
     } else {
       songArtistLabel.text = ""
     }
-    
     if let songAlbum = mediaPlayer.nowPlayingItem?.albumTitle {
       songAlbumLabel.text = songAlbum
     } else {
       songAlbumLabel.text = ""
     }
-    
     if let artwork = mediaPlayer.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400)) {
       self.albumArtImageView.image = artwork
     } else {
@@ -206,7 +201,7 @@ class MediaPlayerViewController: UIViewController {
   
   
   // MARK: - IB Actions
-
+  
   // MARK: - Song Control Button Actions
   
   @IBAction func rewindSongButtonTapped(_ sender: UIButton) {
@@ -223,48 +218,50 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
-    
-    //DispatchQueue.global().async {
-      self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
-    //}
+    self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
     getCurrentlyPlayedInfo()
     if isPlaying {
       songTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
         self.updateCurrentPlaybackTime()
       })
-    }
-    else {
+    } else {
       songTimer?.invalidate()
     }
   }
   
   
-  // MARK: - Audio Source Action
-  
-  @IBAction func volumeSliderDragged(_ sender: UISlider) {
-    
-  }
-  
-  
-  
-  @IBAction func audioSourceButtonTapped(_ sender: UIButton) {
-    
-  }
-  
   // MARK: - Smart Shuffle Button Actions
   
   @IBAction func albumLockButtonTapped(_ sender: UIButton) {
-    
+    sender.isSelected = !sender.isSelected
+    albumLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 20.0) : UIFont(name: "Gill Sans", size: 16.0)
+    albumLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
+    if !sender.isSelected {
+      lockStatus = 3
+      return
+    }
+    lastPlayedItem = mediaPlayer.nowPlayingItem
+    lockStatus = 1
   }
   
+  
   @IBAction func artistLockButtonTapped(_ sender: UIButton) {
-    
+    sender.isSelected = !sender.isSelected
+    artistLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
+    artistLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
+    if !sender.isSelected {
+      lockStatus = 3
+      return
+    }
+    lastPlayedItem = mediaPlayer.nowPlayingItem
+    lockStatus = 0
   }
+
   
   @IBAction func genreLockButtonTapped(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
-    genreLockLabelButton.titleLabel?.font = sender.isSelected ? UIFont.boldSystemFont(ofSize: 15) : UIFont.systemFont(ofSize: 15)
-     
+    genreLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
+    genreLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     if !sender.isSelected {
       lockStatus = 3
       return

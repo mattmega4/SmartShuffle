@@ -14,6 +14,8 @@ class MediaManager: NSObject {
   
   static let shared = MediaManager()
   
+  // MARK: - Get All Song Logic
+  
   func getAllSongs(completion: @escaping (_ songs: [MPMediaItem]?) -> Void) {
     
     MPMediaLibrary.requestAuthorization { (status) in
@@ -26,22 +28,38 @@ class MediaManager: NSObject {
       }
     }
   }
+
   
+  // MARK: - Album Lock Logic
   
-  //func getPermission(completion)
+  func getSongsWithCurrentAlbumFor(item: MPMediaItem) -> MPMediaQuery {
+    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    return query
+  }
   
+  // MARK: - Artist Lock Logic
+  
+  func getSongsWithCurrentArtistFor(item: MPMediaItem) -> MPMediaQuery {
+    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    return query
+  }
+  
+  // MARK: - Genre Lock Logic
   
   func getSongsWithCurrentGenreFor(item: MPMediaItem) -> MPMediaQuery {
-  
     let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     return query
   }
   
-  func removeLock() {
-    
-  }
+
+  
+
   
   
   
