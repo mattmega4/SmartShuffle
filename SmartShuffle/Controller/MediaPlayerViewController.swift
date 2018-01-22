@@ -26,6 +26,8 @@ class MediaPlayerViewController: UIViewController {
   @IBOutlet weak var forwardSongButton: UIButton!
   @IBOutlet weak var volumeLessIconImageView: UIImageView!
   @IBOutlet weak var songVolumeSlider: UISlider!
+  
+  @IBOutlet weak var volumeView: UIView!
   @IBOutlet weak var volumeMoreIconImageView: UIImageView!
   @IBOutlet weak var audioSourceStackView: UIStackView!
   @IBOutlet weak var audioSourceIconButton: UIButton!
@@ -41,8 +43,10 @@ class MediaPlayerViewController: UIViewController {
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
-  let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
+  let mediaPlayer = MPMusicPlayerApplicationController.systemMusicPlayer
   var songTimer: Timer?
+  var firstLaunch = true
+  var volumeControlView = MPVolumeView()
   
   
   override func viewDidLoad() {
@@ -52,18 +56,55 @@ class MediaPlayerViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(songChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
     albumArtImageView.createRoundedCorners()
     setUpAudioPlayerAndGetSongsShuffled()
+    clearSongInfo()
     
+    songProgressSlider.addTarget(self, action: #selector(testingSlider(_:)), for: .valueChanged)
+//    volumeControlView = MPVolumeView(
+//    volumeView.addSubview(volumeControlView)
+    volumeControlView.showsVolumeSlider = true
   }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if volumeView.subviews.count == 0 {
+      let myVolumeView = MPVolumeView(frame: volumeView.bounds)
+      volumeView.addSubview(myVolumeView)
+    }
+//    volumeControlView.frame = volumeView.frame
+  }
+  
+  @objc func testingSlider(_ slider: UISlider) {
+    if slider == songProgressSlider {
+      mediaPlayer.currentPlaybackTime = Double(slider.value)
+    }
+    else {
+     
+    }
+  }
   
   @objc func songChanged(_ notification: Notification) {
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
-//    songProgressSlider.minimumTrackTintColor = .white
+    songProgressView.progress = 0
     songTimePlayedLabel.text = getTimeElapsed()
     songTimeRemainingLabel.text = getTimeRemaining()
-    getCurrentlyPlayedInfo()
+    
+    
+    if !firstLaunch {
+      getCurrentlyPlayedInfo()
+      rewindSongButton.isEnabled = true
+      firstLaunch = false
+    } else {
+      rewindSongButton.isEnabled = false
+    }
+  }
+  
+  func clearSongInfo() {
+    albumArtImageView.image = #imageLiteral(resourceName: "testAlbumCover")
+    songNameLabel.text = ""
+    songArtistLabel.text = ""
+    songAlbumLabel.text = ""
   }
   
   func showUpdatedProgress() {
@@ -93,28 +134,29 @@ class MediaPlayerViewController: UIViewController {
   func getTimeRemaining() -> String {
     let secondsRemaining = songProgressSlider.maximumValue - songProgressSlider.value
     let minutes = Int(secondsRemaining / 60)
-    let seconds = Int (secondsRemaining - Float(60  * minutes))
+    let seconds = String(format: "%02d", Int(secondsRemaining - Float(60  * minutes)))
     return "\(minutes):\(seconds)"
   }
   
   func getTimeElapsed() -> String {
     let secondsElapsed = songProgressSlider.value
     let minutes = Int(secondsElapsed / 60)
-    let seconds = Int (secondsElapsed - Float(60  * minutes))
+    let seconds = String(format: "%02d", Int(secondsElapsed - Float(60  * minutes)))
     return "\(minutes):\(seconds)"
   }
   
   func updateCurrentPlaybackTime() {
     let elapsedTime = mediaPlayer.currentPlaybackTime
     songProgressSlider.value = Float(elapsedTime)
+    songProgressView.progress = Float(elapsedTime / Double(songProgressSlider.maximumValue))
     songTimePlayedLabel.text = getTimeElapsed()
-//    songProgressSlider.minimumTrackTintColor = .blue
     songTimeRemainingLabel.text = getTimeRemaining()
   }
   
   
-  func getCurrentlyPlayedInfo() {
   
+  func getCurrentlyPlayedInfo() {
+    
     if let songTitle = mediaPlayer.nowPlayingItem?.title {
       songNameLabel.text = songTitle
     } else {
@@ -143,9 +185,10 @@ class MediaPlayerViewController: UIViewController {
   
   // MARK: - IB Actions
   
-  @IBAction func songProgressSliderDragged(_ sender: UISlider) {
-    mediaPlayer.currentPlaybackTime = Double(sender.value)
-  }
+  //  @IBAction func songProgressSliderDragged(_ sender: UISlider) {
+  //mediaPlayer.currentPlaybackTime = Double(sender.value)
+  //    print("Slider value changed")
+  //  }
   
   // MARK: - Slider Action
   
@@ -185,6 +228,7 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func volumeSliderDragged(_ sender: UISlider) {
     
   }
+  
   
   
   @IBAction func audioSourceButtonTapped(_ sender: UIButton) {
