@@ -40,7 +40,7 @@ class MediaPlayerViewController: UIViewController {
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
-  let mediaPlayer = MPMusicPlayerApplicationController.systemMusicPlayer
+  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer   //systemMusicPlayer created lag
   var songTimer: Timer?
   var firstLaunch = true
   var lastPlayedItem: MPMediaItem?
@@ -122,6 +122,9 @@ class MediaPlayerViewController: UIViewController {
     if !playedSongs.contains(currentItem) {
       playedSongs.append(currentItem)
     }
+    
+    // MARK: - Lock Status Logic
+    
     if lockStatus == 2 {
       lockStatus = -1
       let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: currentItem)
@@ -131,12 +134,36 @@ class MediaPlayerViewController: UIViewController {
         MBProgressHUD.hide(for: self.view, animated: true)
         self.mediaPlayer.play()
       })
+    } else if lockStatus == 1 {
+      lockStatus = -1
+      let albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: currentItem)
+      mediaPlayer.setQueue(with: albumQuery)
+      self.mediaPlayer.shuffleMode = .songs
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+        MBProgressHUD.hide(for: self.view, animated: true)
+        self.mediaPlayer.play()
+      })
+    } else if lockStatus == 0 {
+      lockStatus = -1
+      let artistQuery = MediaManager.shared.getSongsWithCurrentArtistFor(item: currentItem)
+      mediaPlayer.setQueue(with: artistQuery)
+      self.mediaPlayer.shuffleMode = .songs
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+        MBProgressHUD.hide(for: self.view, animated: true)
+        self.mediaPlayer.play()
+      })
     }
     if lockStatus == 3 {
       lockStatus = -1
       setUpAudioPlayerAndGetSongsShuffled()
+      self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+        self.mediaPlayer.play()
+      })
     }
+    
   }
+  
+  
   
   // MARK: - Clear Song Info
   
@@ -218,6 +245,14 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
+    self.isPlaying ? self.mediaPlayer.prepareToPlay { (error) in
+      if error != nil {
+        self.mediaPlayer.play()
+      } else {
+        print(error?.localizedDescription ?? "")
+      }
+      } : mediaPlayer.pause()
+    
     self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
     getCurrentlyPlayedInfo()
     if isPlaying {
@@ -237,6 +272,11 @@ class MediaPlayerViewController: UIViewController {
     albumLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 20.0) : UIFont(name: "Gill Sans", size: 16.0)
     albumLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     if !sender.isSelected {
+      guard let currentItem = lastPlayedItem else {
+        return
+      }
+      let albumUnlock = MediaManager.shared.removeAlbumLockFor(item: currentItem)
+      mediaPlayer.setQueue(with: albumUnlock)
       lockStatus = 3
       return
     }
@@ -250,19 +290,30 @@ class MediaPlayerViewController: UIViewController {
     artistLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
     artistLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     if !sender.isSelected {
+      guard let currentItem = lastPlayedItem else {
+        return
+      }
+      let artistUnlock = MediaManager.shared.removeArtistLockFor(item: currentItem)
+      mediaPlayer.setQueue(with: artistUnlock)
       lockStatus = 3
       return
     }
     lastPlayedItem = mediaPlayer.nowPlayingItem
     lockStatus = 0
   }
-
+  
   
   @IBAction func genreLockButtonTapped(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
     genreLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
     genreLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
+    
     if !sender.isSelected {
+      guard let currentItem = lastPlayedItem else {
+        return
+      }
+      let genreUnlock = MediaManager.shared.removeGenreLockFor(item: currentItem)
+      mediaPlayer.setQueue(with: genreUnlock)
       lockStatus = 3
       return
     }
@@ -275,7 +326,7 @@ class MediaPlayerViewController: UIViewController {
 
 
 
-
+// MARK: - AVAudioPlayerDelegate Extension
 
 extension MediaPlayerViewController: AVAudioPlayerDelegate {
   func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {

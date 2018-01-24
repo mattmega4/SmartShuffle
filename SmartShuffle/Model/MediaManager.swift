@@ -10,6 +10,7 @@ import UIKit
 import MediaPlayer
 
 
+
 class MediaManager: NSObject {
   
   static let shared = MediaManager()
@@ -27,7 +28,7 @@ class MediaManager: NSObject {
       }
     }
   }
-
+  
   
   // MARK: - Album Lock Logic
   
@@ -56,11 +57,41 @@ class MediaManager: NSObject {
     return query
   }
   
-
   
-
+  // MARK: - Remove Album Filter
+  
+  func removeAlbumLockFor(item: MPMediaItem) -> MPMediaQuery {
+    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    query.removeFilterPredicate(albumFilter)
+    return query
+  }
+  
+  // MARK: - Remove Artist Filter
+  
+  func removeArtistLockFor(item: MPMediaItem) -> MPMediaQuery {
+    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    query.removeFilterPredicate(artistFilter)
+    return query
+  }
+  
+  // MARK: - Remove Genre Filter
+  
+  func removeGenreLockFor(item: MPMediaItem) -> MPMediaQuery {
+    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    query.removeFilterPredicate(genreFilter)
+    return query
+  }
   
   
   
-
+  
+  
+  
+  
 }
