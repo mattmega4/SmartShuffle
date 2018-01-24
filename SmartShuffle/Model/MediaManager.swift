@@ -17,14 +17,14 @@ class MediaManager: NSObject {
   
   // MARK: - Get All Song Logic
   
- 
-  
-  
-  
+
   func getAllSongs(completion: @escaping (_ songs: [MPMediaItem]?) -> Void) {
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
-        let query = MPMediaQuery.songs()
+        let query = MPMediaQuery()
+        let mediaTypeMusic = MPMediaType.music
+        let audioFilter = MPMediaPropertyPredicate(value: mediaTypeMusic.rawValue, forProperty: MPMediaItemPropertyMediaType, comparisonType: MPMediaPredicateComparison.equalTo)
+        query.addFilterPredicate(audioFilter)
         let songs = query.items
       
         completion(songs)
@@ -34,17 +34,6 @@ class MediaManager: NSObject {
     }
   }
 
-
-  func getAudioFor(item: [MPMediaItem]?) -> MPMediaQuery {
-    let mediaTypeMusic = MPMediaType.tvShow
-    let audioFilter = MPMediaPropertyPredicate(value: mediaTypeMusic, forProperty: MPMediaItemPropertyMediaType, comparisonType: MPMediaPredicateComparison.equalTo)
-    let predicates: Set<MPMediaPropertyPredicate> = [audioFilter]
-    let query = MPMediaQuery(filterPredicates: predicates)
-    query.addFilterPredicate(audioFilter)
-    return query
-  }
-  
-  
   
   // MARK: - Album Lock Logic
   
@@ -52,6 +41,7 @@ class MediaManager: NSObject {
     let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
+    query.addFilterPredicate(albumFilter) //
     return query
   }
   
