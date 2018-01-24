@@ -79,10 +79,20 @@ class MediaPlayerViewController: UIViewController {
       guard let theSongs = songs else {
         return
       }
+ 
+      
+      
       self.newSongs = theSongs.filter({ (item) -> Bool in
         return !self.playedSongs.contains(item)
       })
+      
+      
+     
+//      let bob = MediaManager.shared.getAudioFor(item: self.newSongs)
+      
+      
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
+      
       self.mediaPlayer.shuffleMode = .songs
       self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -119,6 +129,11 @@ class MediaPlayerViewController: UIViewController {
     guard let currentItem = lastPlayedItem else {
       return
     }
+    
+    
+   
+
+    
     if !playedSongs.contains(currentItem) {
       playedSongs.append(currentItem)
     }
@@ -157,6 +172,7 @@ class MediaPlayerViewController: UIViewController {
       lockStatus = -1
       setUpAudioPlayerAndGetSongsShuffled()
       self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
+
         self.mediaPlayer.play()
       })
     }
@@ -240,6 +256,7 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func forwardSongButtonTapped(_ sender: UIButton) {
     mediaPlayer.skipToNextItem()
     getCurrentlyPlayedInfo()
+    
   }
   
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {

@@ -195,7 +195,7 @@
 				2918CBAC2002ADC70003A5AA /* Resources */,
 				8FB2C8D6AFDEA0C64F1989A8 /* [CP] Embed Pods Frameworks */,
 				EF081252B9ADBEC8D93B22D1 /* [CP] Copy Pods Resources */,
-				2921816D2015A6BF006F8070 /* ShellScript */,
+				294ECB5B20182B7700FCEA71 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -327,7 +327,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartShuffleTests/Pods-SmartShuffleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2921816D2015A6BF006F8070 /* ShellScript */ = {
+		294ECB5B20182B7700FCEA71 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -338,7 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\"";
+			shellScript = "./Fabric.framework/run 3605c744e15ddf7d8ef099f0020dfcdd2e2abd5c 7bf7613729d303dcf6eda216f60fde4100191c032181ca9d63ffb7b2533bc45a";
 		};
 		83F0CE0611B3DF23751B746B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

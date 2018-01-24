@@ -17,17 +17,33 @@ class MediaManager: NSObject {
   
   // MARK: - Get All Song Logic
   
+ 
+  
+  
+  
   func getAllSongs(completion: @escaping (_ songs: [MPMediaItem]?) -> Void) {
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
         let query = MPMediaQuery.songs()
         let songs = query.items
+      
         completion(songs)
       } else {
         completion(nil)
       }
     }
   }
+
+
+  func getAudioFor(item: [MPMediaItem]?) -> MPMediaQuery {
+    let mediaTypeMusic = MPMediaType.tvShow
+    let audioFilter = MPMediaPropertyPredicate(value: mediaTypeMusic, forProperty: MPMediaItemPropertyMediaType, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [audioFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    query.addFilterPredicate(audioFilter)
+    return query
+  }
+  
   
   
   // MARK: - Album Lock Logic
@@ -58,7 +74,7 @@ class MediaManager: NSObject {
   }
   
   
-  // MARK: - Remove Album Filter
+  // MARK: - Remove Album Filter Logic
   
   func removeAlbumLockFor(item: MPMediaItem) -> MPMediaQuery {
     let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
@@ -68,7 +84,7 @@ class MediaManager: NSObject {
     return query
   }
   
-  // MARK: - Remove Artist Filter
+  // MARK: - Remove Artist Filter Logic
   
   func removeArtistLockFor(item: MPMediaItem) -> MPMediaQuery {
     let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
@@ -78,7 +94,7 @@ class MediaManager: NSObject {
     return query
   }
   
-  // MARK: - Remove Genre Filter
+  // MARK: - Remove Genre Filter Logic
   
   func removeGenreLockFor(item: MPMediaItem) -> MPMediaQuery {
     let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
