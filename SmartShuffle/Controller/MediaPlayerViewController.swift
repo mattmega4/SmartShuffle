@@ -37,11 +37,14 @@ class MediaPlayerViewController: UIViewController {
   
   
   var isPlaying = false
+  var albumIsLocked = false
+  var artistIsLocked = false
+  var genreIsLocked = false
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
   let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
-//  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer
+  //  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer
   var songTimer: Timer?
   var firstLaunch = true
   var lastPlayedItem: MPMediaItem?
@@ -54,7 +57,7 @@ class MediaPlayerViewController: UIViewController {
     
     mediaPlayer.beginGeneratingPlaybackNotifications()
     NotificationCenter.default.addObserver(self, selector: #selector(songChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
-
+    
     albumArtImageView.createRoundedCorners()
     setUpAudioPlayerAndGetSongsShuffled()
     clearSongInfo()
@@ -81,11 +84,11 @@ class MediaPlayerViewController: UIViewController {
       guard let theSongs = songs else {
         return
       }
-
+      
       self.newSongs = theSongs.filter({ (item) -> Bool in
         return !self.playedSongs.contains(item)
       }).shuffled()
-  
+      
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
       
       self.mediaPlayer.shuffleMode = .songs
@@ -106,17 +109,17 @@ class MediaPlayerViewController: UIViewController {
       mediaPlayer.currentPlaybackTime = Double(slider.value)
     }
   }
-
+  
   // MARK: - Logic for Song Change & NSNotification
   
   @objc func songChanged(_ notification: Notification) {
     /*counter += 1
-    if counter < 3 {
-      return
-    }*/
+     if counter < 3 {
+     return
+     }*/
     print("############## Song Changed ################")
     print("\(mediaPlayer.nowPlayingItem?.title ?? "")")
-   
+    
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
@@ -130,9 +133,16 @@ class MediaPlayerViewController: UIViewController {
       firstLaunch = false
     }
     rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
-
+    
+    
+    if albumIsLocked == true {
+      // if count of songs played while on album is greater than or equal to album total count then unlock....
+    }
+    
+    
+    
     // TODO: - Moved to line 12
-
+    
   }
   
   // MARK: - Reset Buttons and Labels
@@ -231,7 +241,7 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
-
+    
     self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
     
     getCurrentlyPlayedInfo()
@@ -248,25 +258,24 @@ class MediaPlayerViewController: UIViewController {
   // MARK: - Smart Shuffle Button Actions
   
   @IBAction func albumLockButtonTapped(_ sender: UIButton) {
-    sender.isSelected = !sender.isSelected
-    
-    // moved to line 110
-    
-
     if let nowPlaying = mediaPlayer.nowPlayingItem {
-      let albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
-   
-      let descriptor = MPMusicPlayerMediaItemQueueDescriptor(query: albumQuery)
-      mediaPlayer.prepend(descriptor)
-
-
-      
-      
-//      mediaPlayer.perform(queueTransaction: <#T##(MPMusicPlayerControllerMutableQueue) -> Void#>, completionHandler: <#T##(MPMusicPlayerControllerQueue, Error?) -> Void#>)
-// moved to 125
+      if sender.isSelected {
+        sender.isSelected = false
+        albumIsLocked = false
+        let lockRemovedQuery = MediaManager.shared.removeAlbumLockFor(item: nowPlaying)
+        let lockRemovedDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: lockRemovedQuery)
+        mediaPlayer.prepend(lockRemovedDescriptor)
+        mediaPlayer.prepareToPlay()
+      } else {
+        sender.isSelected = true
+        albumIsLocked = true
+        let albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
+        let albumDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: albumQuery)
+        mediaPlayer.prepend(albumDescriptor)
+        mediaPlayer.prepareToPlay()
+      }
     }
-    
-
+    // moved to line 110
   }
   
   

@@ -35,6 +35,9 @@ class MediaManager: NSObject {
   }
 
   
+
+  
+  
   // MARK: - Album Lock Logic
   
   func getSongsWithCurrentAlbumFor(item: MPMediaItem) -> MPMediaQuery {
