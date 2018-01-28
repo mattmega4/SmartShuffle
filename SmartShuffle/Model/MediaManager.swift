@@ -41,7 +41,7 @@ class MediaManager: NSObject {
     let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
-    query.addFilterPredicate(albumFilter) //
+    query.addFilterPredicate(albumFilter)
     return query
   }
   

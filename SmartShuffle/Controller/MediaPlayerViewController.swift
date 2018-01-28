@@ -40,12 +40,13 @@ class MediaPlayerViewController: UIViewController {
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
-  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer   //systemMusicPlayer created lag
+  let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
+//  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer
   var songTimer: Timer?
   var firstLaunch = true
   var lastPlayedItem: MPMediaItem?
   var volumeControlView = MPVolumeView()
-  var lockStatus = -1 // 0 artist, 1 album, 2 genre, 3 all
+  var lockStatus = -1
   var counter = 0
   
   override func viewDidLoad() {
@@ -53,7 +54,7 @@ class MediaPlayerViewController: UIViewController {
     
     mediaPlayer.beginGeneratingPlaybackNotifications()
     NotificationCenter.default.addObserver(self, selector: #selector(songChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(queueChanged(_:)), name: NSNotification.Name.MPMusicPlayerControllerQueueDidChange, object: nil)
+
     albumArtImageView.createRoundedCorners()
     setUpAudioPlayerAndGetSongsShuffled()
     clearSongInfo()
@@ -73,19 +74,18 @@ class MediaPlayerViewController: UIViewController {
   // MARK: - Initial Audio Player setup Logic
   
   func setUpAudioPlayerAndGetSongsShuffled() {
-    try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategorySoloAmbient) // AVAudioSessionCategorySoloAmbient is default
+    try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategorySoloAmbient)
     try? AVAudioSession.sharedInstance().setActive(true)
-    //    try? AVAudioSession.sharedInstance().setActive( )
     MBProgressHUD.showAdded(to: view, animated: true)
     MediaManager.shared.getAllSongs { (songs) in
       guard let theSongs = songs else {
         return
       }
-      
+
       self.newSongs = theSongs.filter({ (item) -> Bool in
         return !self.playedSongs.contains(item)
       }).shuffled()
-      self.mediaPlayer.setQueue(with: nil)
+  
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
       
       self.mediaPlayer.shuffleMode = .songs
@@ -106,13 +106,7 @@ class MediaPlayerViewController: UIViewController {
       mediaPlayer.currentPlaybackTime = Double(slider.value)
     }
   }
-  
-  @objc func queueChanged(_ notification: Notification) {
-    
-    print("************* QUEUE CHANGED ***************")
-    
-  }
-  
+
   // MARK: - Logic for Song Change & NSNotification
   
   @objc func songChanged(_ notification: Notification) {
@@ -122,9 +116,7 @@ class MediaPlayerViewController: UIViewController {
     }*/
     print("############## Song Changed ################")
     print("\(mediaPlayer.nowPlayingItem?.title ?? "")")
-    //print("\(mediaPlayer.nowPlayingItem?.genre ?? "")")
-   // print("break")
-    
+   
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
@@ -138,104 +130,9 @@ class MediaPlayerViewController: UIViewController {
       firstLaunch = false
     }
     rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
-    
-    
-    
-    
-    
-    
-  /*  if let currentItem = lastPlayedItem {
-      if lockStatus != -1  {
-      
-      // MARK: - Lock Status Logic
-      
-      if lockStatus == 2 {
-        lockStatus = -1
-        print("Lock status 2")
-        let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: currentItem)
-        if let songs = genreQuery.items {
-          let filteredSongs = songs.filter({ (item) -> Bool in
-            return !self.playedSongs.contains(item)
-          })
-          if filteredSongs.count > 0 {
-            mediaPlayer.setQueue(with: MPMediaItemCollection(items: filteredSongs))
-//            self.mediaPlayer.shuffleMode = .songs
-            self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
-              DispatchQueue.main.async {
-                MBProgressHUD.hide(for: self.view, animated: true)
-              }
-              self.mediaPlayer.play()
-            })
-          }
-        }
-        
-      } else if lockStatus == 1 {
-        lockStatus = -1
-        print("Lock status 1")
-        let albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: currentItem)
-        if let songs = albumQuery.items {
-          let filteredSongs = songs.filter({ (item) -> Bool in
-            return !self.playedSongs.contains(item)
-          })
-          if filteredSongs.count > 0 {
-            mediaPlayer.setQueue(with: MPMediaItemCollection(items: filteredSongs))
-//            self.mediaPlayer.shuffleMode = .songs
-            self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
-              DispatchQueue.main.async {
-                MBProgressHUD.hide(for: self.view, animated: true)
-              }
-              self.mediaPlayer.play()
-            })
-          }
-        }
-      } else if lockStatus == 0 {
-        lockStatus = -1
-        print("Lock status 0")
-        let artistQuery = MediaManager.shared.getSongsWithCurrentArtistFor(item: currentItem)
-        if let songs = artistQuery.items {
-          let filteredSongs = songs.filter({ (item) -> Bool in
-            return !self.playedSongs.contains(item)
-          })
-          if filteredSongs.count > 0 {
-            mediaPlayer.setQueue(with: MPMediaItemCollection(items: filteredSongs))
-//            self.mediaPlayer.shuffleMode = .songs
-            self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
-              DispatchQueue.main.async {
-                MBProgressHUD.hide(for: self.view, animated: true)
-              }
-              self.mediaPlayer.play()
-            })
-          }
-        }
-      }
-      if lockStatus == 3 {
-        lockStatus = -1
-        print("Lock status 3")
-        setUpAudioPlayerAndGetSongsShuffled()
-        self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
-          
-          self.mediaPlayer.play()
-        })
-      }
-    }
-    else if let nowPlaying = mediaPlayer.nowPlayingItem {
-      if !playedSongs.contains(nowPlaying) {
-        playedSongs.append(nowPlaying)
-      } else {
-        resetLockButtonsAndLabels()
-        
-        MediaManager.shared.removeAlbumLockFor(item: currentItem)
-        MediaManager.shared.removeArtistLockFor(item: currentItem)
-        MediaManager.shared.removeGenreLockFor(item: currentItem)
-//        self.setUpAudioPlayerAndGetSongsShuffled()
-      }
-    }
-    }
-    if let nowPlaying = mediaPlayer.nowPlayingItem {
-      if !playedSongs.contains(nowPlaying) {
-        playedSongs.append(nowPlaying)
-      }
-    }*/
+
+    // TODO: - Moved to line 12
+
   }
   
   // MARK: - Reset Buttons and Labels
@@ -334,14 +231,7 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func playPauseSongButtonTapped(_ sender: UIButton) {
     isPlaying = !isPlaying
     sender.isSelected = isPlaying
-//    self.isPlaying ? self.mediaPlayer.prepareToPlay { (error) in
-//      if error != nil {
-//        self.mediaPlayer.play()
-//      } else {
-//        print(error?.localizedDescription ?? "")
-//      }
-//      } : mediaPlayer.pause()
-    
+
     self.isPlaying ? self.mediaPlayer.play() : self.mediaPlayer.pause()
     
     getCurrentlyPlayedInfo()
@@ -360,41 +250,23 @@ class MediaPlayerViewController: UIViewController {
   @IBAction func albumLockButtonTapped(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
     
-    // moved to line 44
+    // moved to line 110
     
-    
-    /*albumLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 20.0) : UIFont(name: "Gill Sans", size: 16.0)
-    albumLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
-    if !sender.isSelected {
-      guard let currentItem = lastPlayedItem else {
-        return
-      }
-      let albumUnlock = MediaManager.shared.removeAlbumLockFor(item: currentItem)
-      mediaPlayer.setQueue(with: albumUnlock)
-      lockStatus = 3
-      return
-    }*/
-    
-    
+
     if let nowPlaying = mediaPlayer.nowPlayingItem {
       let albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
+   
       let descriptor = MPMusicPlayerMediaItemQueueDescriptor(query: albumQuery)
       mediaPlayer.prepend(descriptor)
+
+
       
-//    if let songs = albumQuery.items {
-//      let filteredSongs = songs.filter({ (item) -> Bool in
-//        return !self.playedSongs.contains(item)
-//      })
-//      if filteredSongs.count > 0 {
-//        let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: MPMediaItemCollection(items: filteredSongs))
-//        mediaPlayer.prepend(descriptor)
-     // }
       
-    //}
+//      mediaPlayer.perform(queueTransaction: <#T##(MPMusicPlayerControllerMutableQueue) -> Void#>, completionHandler: <#T##(MPMusicPlayerControllerQueue, Error?) -> Void#>)
+// moved to 125
     }
     
-    //lastPlayedItem = mediaPlayer.nowPlayingItem
-    //lockStatus = 1
+
   }
   
   
