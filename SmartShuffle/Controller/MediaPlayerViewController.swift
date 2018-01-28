@@ -40,6 +40,13 @@ class MediaPlayerViewController: UIViewController {
   var albumIsLocked = false
   var artistIsLocked = false
   var genreIsLocked = false
+  
+  // idea
+  var albumQuery: MPMediaQuery?
+  var artistQuery: MPMediaQuery?
+  var genreQuery: MPMediaQuery?
+  // idea
+  
   var newSongs = [MPMediaItem]()
   var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
@@ -110,13 +117,14 @@ class MediaPlayerViewController: UIViewController {
     }
   }
   
+  
   // MARK: - Logic for Song Change & NSNotification
   
   @objc func songChanged(_ notification: Notification) {
-    /*counter += 1
+    counter += 1
      if counter < 3 {
      return
-     }*/
+     }
     print("############## Song Changed ################")
     print("\(mediaPlayer.nowPlayingItem?.title ?? "")")
     
@@ -134,13 +142,18 @@ class MediaPlayerViewController: UIViewController {
     }
     rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
     
-    
-    if albumIsLocked == true {
-      // if count of songs played while on album is greater than or equal to album total count then unlock....
+    if let nowPlaying = mediaPlayer.nowPlayingItem {
+      albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
+      if let albumTotal = albumQuery?.items?.count {
+        if albumTotal == 1 {
+          albumLockIconButton.isEnabled = false
+          albumLockLabel.isEnabled = false
+        } else {
+          albumLockIconButton.isEnabled = true
+          albumLockLabel.isEnabled = true
+        }
+      }
     }
-    
-    
-    
     // TODO: - Moved to line 12
     
   }
