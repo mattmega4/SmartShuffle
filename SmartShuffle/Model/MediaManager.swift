@@ -14,6 +14,8 @@ import MediaPlayer
 class MediaManager: NSObject {
   
   static let shared = MediaManager()
+  var playedSongs = [MPMediaItem]()
+  var lockedSongs = [MPMediaItem]()
   
   // MARK: - Get All Song Logic
   
@@ -95,6 +97,38 @@ class MediaManager: NSObject {
     let query = MPMediaQuery(filterPredicates: predicates)
     query.removeFilterPredicate(genreFilter)
     return query
+  }
+  
+  // MARK: - Check if the songs should continiw playing from the same genre, album or atrist
+  
+  func hasPlayedAllSongsFromAlbumFor(song: MPMediaItem) -> Bool {
+    if let allSongsInAlbum = getSongsWithCurrentAlbumFor(item: song).items {
+      return lockedSongsContains(songs: allSongsInAlbum)
+    }
+    return true
+  }
+  
+  func hasPlayedAllSongsFromArtistFor(song: MPMediaItem) -> Bool {
+    if let allSongsInArtist = getSongsWithCurrentArtistFor(item: song).items {
+      return lockedSongsContains(songs: allSongsInGenre)
+    }
+    return true
+  }
+  
+  func hasPlayedAllSongsFromGenreFor(song: MPMediaItem) -> Bool {
+    if let allSongsInGenre = getSongsWithCurrentGenreFor(item: song).items {
+      return lockedSongsContains(songs: allSongsInGenre)
+    }
+    return true
+  }
+  
+  func lockedSongsContains(songs: [MPMediaItem]) -> Bool {
+    for aSong in songs {
+      if !lockedSongs.contains(aSong) {
+        return false
+      }
+    }
+    return true
   }
   
   

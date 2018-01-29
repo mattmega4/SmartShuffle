@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "11"; ObjectID = "3TJ-TD-ZLW"; */
+"3TJ-TD-ZLW.text" = "11";
+
+/* Class = "UILabel"; text = "Genre"; ObjectID = "Lp3-9X-l9N"; */
+"Lp3-9X-l9N.text" = "Genre";
+
+/* Class = "UILabel"; text = "Album"; ObjectID = "aDg-Vw-TuI"; */
+"aDg-Vw-TuI.text" = "Album";
+
+/* Class = "UILabel"; text = "Song Name"; ObjectID = "eFj-zb-ua7"; */
+"eFj-zb-ua7.text" = "Song Name";
+
+/* Class = "UILabel"; text = "Artist Name"; ObjectID = "nJp-Rw-4El"; */
+"nJp-Rw-4El.text" = "Artist Name";
+
+/* Class = "UILabel"; text = "11"; ObjectID = "vbp-zX-ori"; */
+"vbp-zX-ori.text" = "11";
+
+/* Class = "UILabel"; text = "Album Name"; ObjectID = "yAZ-nB-Rgs"; */
+"yAZ-nB-Rgs.text" = "Album Name";
+
+/* Class = "UILabel"; text = "Artist"; ObjectID = "zMe-rt-Diy"; */
+"zMe-rt-Diy.text" = "Artist";

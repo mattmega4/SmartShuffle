@@ -48,7 +48,6 @@ class MediaPlayerViewController: UIViewController {
   // idea
   
   var newSongs = [MPMediaItem]()
-  var playedSongs = [MPMediaItem]()
   var currentSong: MPMediaItem?
   let mediaPlayer = MPMusicPlayerApplicationController.applicationQueuePlayer
   //  let mediaPlayer = MPMusicPlayerApplicationController.applicationMusicPlayer
@@ -93,10 +92,12 @@ class MediaPlayerViewController: UIViewController {
       }
       
       self.newSongs = theSongs.filter({ (item) -> Bool in
-        return !self.playedSongs.contains(item)
+        return !MediaManager.shared.playedSongs.contains(item)
       }).shuffled()
       
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
+      
+      
       
       self.mediaPlayer.shuffleMode = .songs
       self.mediaPlayer.repeatMode = .none
@@ -128,6 +129,7 @@ class MediaPlayerViewController: UIViewController {
     print("############## Song Changed ################")
     print("\(mediaPlayer.nowPlayingItem?.title ?? "")")
     
+    
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
@@ -143,7 +145,11 @@ class MediaPlayerViewController: UIViewController {
     rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
     
     if let nowPlaying = mediaPlayer.nowPlayingItem {
-      albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
+      
+      
+      
+      
+      /*albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
       if let albumTotal = albumQuery?.items?.count {
         if albumTotal == 1 {
           albumLockIconButton.isEnabled = false
@@ -152,7 +158,26 @@ class MediaPlayerViewController: UIViewController {
           albumLockIconButton.isEnabled = true
           albumLockLabel.isEnabled = true
         }
+      }*/
+      albumLockIconButton.isEnabled = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying).items?.count ?? 0 > 1
+      MediaManager.shared.playedSongs.append(nowPlaying)
+      if self.albumIsLocked || self.artistIsLocked || self.genreIsLocked {
+        MediaManager.shared.lockedSongs.append(nowPlaying)
       }
+      
+      if albumIsLocked && MediaManager.shared.hasPlayedAllSongsFromAlbumFor(song: nowPlaying) {
+        albumLockButtonTapped(albumLockIconButton)
+        MediaManager.shared.lockedSongs.removeAll()
+      }
+      if artistIsLocked && MediaManager.shared.hasPlayedAllSongsFromArtistFor(song: nowPlaying) {
+        artistLockButtonTapped(artistLockIconButton)
+         MediaManager.shared.lockedSongs.removeAll()
+      }
+      if genreIsLocked && MediaManager.shared.hasPlayedAllSongsFromGenreFor(song: nowPlaying) {
+        genreLockButtonTapped(genreLockIconButton)
+         MediaManager.shared.lockedSongs.removeAll()
+      }
+      
     }
     // TODO: - Moved to line 12
     
