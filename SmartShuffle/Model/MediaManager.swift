@@ -99,7 +99,7 @@ class MediaManager: NSObject {
     return query
   }
   
-  // MARK: - Check if the songs should continiw playing from the same genre, album or atrist
+  // MARK: - Check if the songs should continue playing from the same genre, album or atrist
   
   func hasPlayedAllSongsFromAlbumFor(song: MPMediaItem) -> Bool {
     if let allSongsInAlbum = getSongsWithCurrentAlbumFor(item: song).items {

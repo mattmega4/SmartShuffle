@@ -93,12 +93,9 @@ class MediaPlayerViewController: UIViewController {
       
       self.newSongs = theSongs.filter({ (item) -> Bool in
         return !MediaManager.shared.playedSongs.contains(item)
-      }).shuffled()
+      })
       
       self.mediaPlayer.setQueue(with: MPMediaItemCollection(items: self.newSongs))
-      
-      
-      
       self.mediaPlayer.shuffleMode = .songs
       self.mediaPlayer.repeatMode = .none
       self.mediaPlayer.prepareToPlay(completionHandler: { (error) in
@@ -126,10 +123,7 @@ class MediaPlayerViewController: UIViewController {
      if counter < 3 {
      return
      }
-    print("############## Song Changed ################")
-    print("\(mediaPlayer.nowPlayingItem?.title ?? "")")
-    
-    
+
     songProgressSlider.maximumValue = Float(mediaPlayer.nowPlayingItem?.playbackDuration ?? 0)
     songProgressSlider.minimumValue = 0
     songProgressSlider.value = 0
@@ -145,22 +139,9 @@ class MediaPlayerViewController: UIViewController {
     rewindSongButton.isEnabled = mediaPlayer.indexOfNowPlayingItem != 0
     
     if let nowPlaying = mediaPlayer.nowPlayingItem {
-      
-      
-      
-      
-      /*albumQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
-      if let albumTotal = albumQuery?.items?.count {
-        if albumTotal == 1 {
-          albumLockIconButton.isEnabled = false
-          albumLockLabel.isEnabled = false
-        } else {
-          albumLockIconButton.isEnabled = true
-          albumLockLabel.isEnabled = true
-        }
-      }*/
       albumLockIconButton.isEnabled = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying).items?.count ?? 0 > 1
       MediaManager.shared.playedSongs.append(nowPlaying)
+
       if self.albumIsLocked || self.artistIsLocked || self.genreIsLocked {
         MediaManager.shared.lockedSongs.append(nowPlaying)
       }
@@ -179,7 +160,6 @@ class MediaPlayerViewController: UIViewController {
       }
       
     }
-    // TODO: - Moved to line 12
     
   }
   
@@ -265,7 +245,20 @@ class MediaPlayerViewController: UIViewController {
   // MARK: - Song Control Button Actions
   
   @IBAction func rewindSongButtonTapped(_ sender: UIButton) {
-    mediaPlayer.skipToPreviousItem()
+    
+    let secondsElapsed = songProgressSlider.value
+    let minutes = Int(secondsElapsed / 60)
+    let seconds = Int(secondsElapsed - Float(60  * minutes))
+    if seconds < 5 {
+      mediaPlayer.skipToPreviousItem()
+    } else {
+      mediaPlayer.skipToBeginning()
+    }
+    
+    
+//    mediaPlayer.skipToPreviousItem()
+    
+    
     getCurrentlyPlayedInfo()
   }
   
@@ -313,44 +306,48 @@ class MediaPlayerViewController: UIViewController {
         mediaPlayer.prepareToPlay()
       }
     }
-    // moved to line 110
   }
   
   
   @IBAction func artistLockButtonTapped(_ sender: UIButton) {
-    sender.isSelected = !sender.isSelected
-    artistLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
-    artistLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
-    if !sender.isSelected {
-      guard let currentItem = lastPlayedItem else {
-        return
+    if let nowPlaying = mediaPlayer.nowPlayingItem {
+      if sender.isSelected {
+        sender.isSelected = false
+        artistIsLocked = false
+        let lockRemovedQuery = MediaManager.shared.removeArtistLockFor(item: nowPlaying)
+        let lockRemovedDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: lockRemovedQuery)
+        mediaPlayer.prepend(lockRemovedDescriptor)
+        mediaPlayer.prepareToPlay()
+      } else {
+        sender.isSelected = true
+        artistIsLocked = true
+        let artistQuery = MediaManager.shared.getSongsWithCurrentAlbumFor(item: nowPlaying)
+        let artistDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: artistQuery)
+        mediaPlayer.prepend(artistDescriptor)
+        mediaPlayer.prepareToPlay()
       }
-      let artistUnlock = MediaManager.shared.removeArtistLockFor(item: currentItem)
-      mediaPlayer.setQueue(with: artistUnlock)
-      lockStatus = 3
-      return
     }
-    lastPlayedItem = mediaPlayer.nowPlayingItem
-    lockStatus = 0
   }
   
   
   @IBAction func genreLockButtonTapped(_ sender: UIButton) {
-    sender.isSelected = !sender.isSelected
-    genreLockLabel.font = sender.isSelected ? UIFont(name: "Gill Sans-Bold", size: 15.0) : UIFont(name: "Gill Sans", size: 15.0)
-    genreLockLabel.tintColor = sender.isSelected ? UIColor.init(red: 255.0/255.0, green: 45.0/255.0, blue: 85.0/255.0, alpha: 1.0) : UIColor.init(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
-    
-    if !sender.isSelected {
-      guard let currentItem = lastPlayedItem else {
-        return
+    if let nowPlaying = mediaPlayer.nowPlayingItem {
+      if sender.isSelected {
+        sender.isSelected = false
+        genreIsLocked = false
+        let lockRemovedQuery = MediaManager.shared.removeGenreLockFor(item: nowPlaying)
+        let lockRemovedDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: lockRemovedQuery)
+        mediaPlayer.prepend(lockRemovedDescriptor)
+        mediaPlayer.prepareToPlay()
+      } else {
+        sender.isSelected = true
+        albumIsLocked = true
+        let genreQuery = MediaManager.shared.getSongsWithCurrentGenreFor(item: nowPlaying)
+        let genreDescriptor = MPMusicPlayerMediaItemQueueDescriptor(query: genreQuery)
+        mediaPlayer.prepend(genreDescriptor)
+        mediaPlayer.prepareToPlay()
       }
-      let genreUnlock = MediaManager.shared.removeGenreLockFor(item: currentItem)
-      mediaPlayer.setQueue(with: genreUnlock)
-      lockStatus = 3
-      return
     }
-    lastPlayedItem = mediaPlayer.nowPlayingItem
-    lockStatus = 2
   }
   
   
@@ -369,31 +366,5 @@ extension MediaPlayerViewController: AVAudioPlayerDelegate {
     print("finished playing")
     
   }
-  
-  
+
 }
-
-extension Sequence {
-  /// Returns an array with the contents of this sequence, shuffled.
-  func shuffled() -> [Element] {
-    var result = Array(self)
-    result.shuffle()
-    return result
-  }
-}
-
-extension MutableCollection {
-  /// Shuffles the contents of this collection.
-  mutating func shuffle() {
-    let c = count
-    guard c > 1 else { return }
-    
-    for (firstUnshuffled, unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
-      let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
-      let i = index(firstUnshuffled, offsetBy: d)
-      swapAt(firstUnshuffled, i)
-    }
-  }
-}
-
-
