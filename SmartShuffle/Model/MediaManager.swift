@@ -28,7 +28,6 @@ class MediaManager: NSObject {
         let audioFilter = MPMediaPropertyPredicate(value: mediaTypeMusic.rawValue, forProperty: MPMediaItemPropertyMediaType, comparisonType: MPMediaPredicateComparison.equalTo)
         query.addFilterPredicate(audioFilter)
         let songs = query.items
-      
         completion(songs)
       } else {
         completion(nil)
@@ -37,23 +36,22 @@ class MediaManager: NSObject {
   }
 
   
-
-  
   
   // MARK: - Album Lock Logic
   
   func getSongsWithCurrentAlbumFor(item: MPMediaItem) -> MPMediaQuery {
-    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
+    let albumFilter = MPMediaPropertyPredicate(value: item.albumPersistentID, forProperty: MPMediaItemPropertyAlbumPersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     query.addFilterPredicate(albumFilter)
+  
     return query
   }
   
   // MARK: - Artist Lock Logic
   
   func getSongsWithCurrentArtistFor(item: MPMediaItem) -> MPMediaQuery {
-    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist, comparisonType: MPMediaPredicateComparison.equalTo)
+    let artistFilter = MPMediaPropertyPredicate(value: item.artistPersistentID, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     return query
@@ -62,7 +60,7 @@ class MediaManager: NSObject {
   // MARK: - Genre Lock Logic
   
   func getSongsWithCurrentGenreFor(item: MPMediaItem) -> MPMediaQuery {
-    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let genreFilter = MPMediaPropertyPredicate(value: item.genrePersistentID, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     return query
@@ -72,7 +70,7 @@ class MediaManager: NSObject {
   // MARK: - Remove Album Filter Logic
   
   func removeAlbumLockFor(item: MPMediaItem) -> MPMediaQuery {
-    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let albumFilter = MPMediaPropertyPredicate(value: item.albumPersistentID, forProperty: MPMediaItemPropertyAlbumPersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     query.removeFilterPredicate(albumFilter)
@@ -82,7 +80,7 @@ class MediaManager: NSObject {
   // MARK: - Remove Artist Filter Logic
   
   func removeArtistLockFor(item: MPMediaItem) -> MPMediaQuery {
-    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let artistFilter = MPMediaPropertyPredicate(value: item.artistPersistentID, forProperty: MPMediaItemPropertyArtistPersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     query.removeFilterPredicate(artistFilter)
@@ -92,7 +90,7 @@ class MediaManager: NSObject {
   // MARK: - Remove Genre Filter Logic
   
   func removeGenreLockFor(item: MPMediaItem) -> MPMediaQuery {
-    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let genreFilter = MPMediaPropertyPredicate(value: item.genrePersistentID, forProperty: MPMediaItemPropertyGenrePersistentID, comparisonType: MPMediaPredicateComparison.equalTo)
     let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
     let query = MPMediaQuery(filterPredicates: predicates)
     query.removeFilterPredicate(genreFilter)
