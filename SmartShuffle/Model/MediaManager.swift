@@ -110,7 +110,7 @@ class MediaManager: NSObject {
   
   func hasPlayedAllSongsFromArtistFor(song: MPMediaItem) -> Bool {
     if let allSongsInArtist = getSongsWithCurrentArtistFor(item: song).items {
-      return lockedSongsContains(songs: allSongsInGenre)
+      return lockedSongsContains(songs: allSongsInArtist)
     }
     return true
   }
