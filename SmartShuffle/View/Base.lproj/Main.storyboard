@@ -20,20 +20,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testAlbumCover" translatesAutoresizingMaskIntoConstraints="NO" id="uEZ-eb-Coh">
-                                <rect key="frame" x="124" y="45" width="128" height="128"/>
+                                <rect key="frame" x="133" y="45" width="110.5" height="110.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uEZ-eb-Coh" secondAttribute="height" multiplier="1:1" id="aJo-6V-GpC"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="128" id="d8r-sO-4nL"/>
                                 </constraints>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7af-Sh-6MM">
-                                <rect key="frame" x="30" y="214.5" width="315" height="2"/>
+                                <rect key="frame" x="30" y="197" width="315" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="lVW-gJ-B14"/>
                                 </constraints>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="753" verticalCompressionResistancePriority="755" text="0:0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TJ-TD-ZLW">
-                                <rect key="frame" x="30" y="238" width="75" height="12"/>
+                                <rect key="frame" x="30" y="220.5" width="75" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="CH2-ra-mHW"/>
                                     <constraint firstAttribute="height" constant="12" id="zyW-gI-7tG"/>
@@ -43,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbp-zX-ori">
-                                <rect key="frame" x="270" y="238.5" width="75" height="12"/>
+                                <rect key="frame" x="270" y="221" width="75" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="ly1-Qm-O4A"/>
                                     <constraint firstAttribute="height" constant="12" id="rbI-H4-kYg"/>
@@ -52,35 +52,35 @@
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFj-zb-ua7">
-                                <rect key="frame" x="25" y="260" width="325" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFj-zb-ua7">
+                                <rect key="frame" x="25" y="242.5" width="325" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="MmV-mn-gF0"/>
+                                    <constraint firstAttribute="height" constant="30" id="MmV-mn-gF0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="19"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJp-Rw-4El">
-                                <rect key="frame" x="25" y="295" width="325" height="25"/>
+                                <rect key="frame" x="25" y="282.5" width="325" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="TKa-jM-5fX"/>
+                                    <constraint firstAttribute="height" constant="30" id="TKa-jM-5fX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="16"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAZ-nB-Rgs">
-                                <rect key="frame" x="25" y="330" width="325" height="25"/>
+                                <rect key="frame" x="25" y="322.5" width="325" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="Mb6-xZ-zJr"/>
+                                    <constraint firstAttribute="height" constant="30" id="Mb6-xZ-zJr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="os6-I5-BrP">
-                                <rect key="frame" x="30" y="400" width="30" height="30"/>
+                                <rect key="frame" x="30" y="397.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="os6-I5-BrP" secondAttribute="height" multiplier="1:1" id="kjn-pR-Pwh"/>
                                 </constraints>
@@ -91,7 +91,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="voy-gF-9ll">
-                                <rect key="frame" x="172.5" y="400" width="30" height="30"/>
+                                <rect key="frame" x="172.5" y="397.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="ShT-wa-ZWU"/>
                                     <constraint firstAttribute="width" secondItem="voy-gF-9ll" secondAttribute="height" multiplier="1:1" id="nd1-3C-Zwz"/>
@@ -106,7 +106,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5QH-Rt-SeM">
-                                <rect key="frame" x="315" y="400" width="30" height="30"/>
+                                <rect key="frame" x="315" y="397.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5QH-Rt-SeM" secondAttribute="height" multiplier="1:1" id="Nla-f4-eE6"/>
                                 </constraints>
@@ -117,18 +117,18 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="volumeLessIconLight" translatesAutoresizingMaskIntoConstraints="NO" id="cFp-6N-4g6">
-                                <rect key="frame" x="30" y="500" width="15" height="15"/>
+                                <rect key="frame" x="30" y="497.5" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="4KH-D7-jem"/>
                                     <constraint firstAttribute="height" constant="15" id="tP9-Rb-ghQ"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oj7-Lk-GiM">
-                                <rect key="frame" x="45" y="560" width="50" height="50"/>
+                                <rect key="frame" x="45" y="557.5" width="50" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="Asa-PL-xMm"/>
+                                    <constraint firstAttribute="height" constant="50" id="Asa-PL-xMm"/>
                                     <constraint firstAttribute="width" secondItem="Oj7-Lk-GiM" secondAttribute="height" multiplier="1:1" id="OlX-nL-Q7h"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="Uk5-5f-gUG"/>
+                                    <constraint firstAttribute="width" constant="50" id="Uk5-5f-gUG"/>
                                 </constraints>
                                 <state key="normal" image="unlockedIconLight">
                                     <color key="titleColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
@@ -139,13 +139,16 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDg-Vw-TuI">
-                                <rect key="frame" x="50" y="624.5" width="40" height="17.5"/>
+                                <rect key="frame" x="50" y="622" width="40" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="8lY-Hi-A65"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTd-zr-Cgc">
-                                <rect key="frame" x="162.5" y="560" width="50" height="50"/>
+                                <rect key="frame" x="162.5" y="557.5" width="50" height="50"/>
                                 <state key="normal" image="unlockedIconLight">
                                     <color key="titleColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -155,13 +158,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zMe-rt-Diy">
-                                <rect key="frame" x="168" y="624.5" width="40" height="17.5"/>
+                                <rect key="frame" x="168" y="622" width="40" height="20"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQc-WX-KIS">
-                                <rect key="frame" x="280" y="560" width="50" height="50"/>
+                                <rect key="frame" x="280" y="557.5" width="50" height="50"/>
                                 <state key="normal" image="unlockedIconLight">
                                     <color key="titleColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -171,13 +174,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lp3-9X-l9N">
-                                <rect key="frame" x="285" y="624.5" width="40" height="17.5"/>
+                                <rect key="frame" x="285" y="622" width="40" height="20"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                                 <color key="textColor" red="0.84705882352941175" green="0.85490196078431369" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5A-Qe-8S1">
-                                <rect key="frame" x="28" y="198" width="319" height="36"/>
+                                <rect key="frame" x="28" y="180.5" width="319" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="6hl-Ma-K1R"/>
                                 </constraints>
@@ -186,14 +189,14 @@
                                 <color key="thumbTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </slider>
                             <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="8ik-0I-2hU">
-                                <rect key="frame" x="30" y="460" width="315" height="30"/>
+                                <rect key="frame" x="30" y="457.5" width="315" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="rqB-6k-c3v"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="volumeMoreIconLight" translatesAutoresizingMaskIntoConstraints="NO" id="RXk-X8-3gV">
-                                <rect key="frame" x="330" y="500" width="15" height="15"/>
+                                <rect key="frame" x="330" y="497.5" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="di2-Ci-cbp"/>
                                     <constraint firstAttribute="width" constant="15" id="eEw-wC-b2D"/>

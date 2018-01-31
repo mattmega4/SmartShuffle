@@ -94,7 +94,9 @@ class MediaPlayerViewController: UIViewController {
       self.mediaPlayer.setQueue(with: emptyTheQueue)
       self.mediaPlayer.nowPlayingItem = nil
 //      self.mediaPlayer.stop()
-      //
+      DispatchQueue.main.async {
+      self.clearSongInfo()
+      }
       
       self.newSongs = theSongs.filter({ (item) -> Bool in
         return !MediaManager.shared.playedSongs.contains(item)
@@ -365,8 +367,12 @@ class MediaPlayerViewController: UIViewController {
     getCurrentlyPlayedInfo()
     if isPlaying {
       songTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
-        self.updateCurrentPlaybackTime()
-        self.getCurrentlyPlayedInfo()
+        DispatchQueue.main.async {
+          self.updateCurrentPlaybackTime()
+          self.getCurrentlyPlayedInfo()
+        }
+        
+        
       })
     } else {
       songTimer?.invalidate()
