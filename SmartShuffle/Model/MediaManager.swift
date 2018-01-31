@@ -27,7 +27,9 @@ class MediaManager: NSObject {
         let mediaTypeMusic = MPMediaType.music
         let audioFilter = MPMediaPropertyPredicate(value: mediaTypeMusic.rawValue, forProperty: MPMediaItemPropertyMediaType, comparisonType: MPMediaPredicateComparison.equalTo)
         query.addFilterPredicate(audioFilter)
-        let songs = query.items
+        let songs = query.items?.filter({ (item) -> Bool in
+          return item.mediaType == .music
+        })
         completion(songs)
       } else {
         completion(nil)
@@ -43,14 +45,14 @@ class MediaManager: NSObject {
   // MARK: - Album Lock Logic
   
   func getSongsWithCurrentAlbumFor(item: MPMediaItem) -> MPMediaQuery {
-//    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
-//    let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
-//    let query = MPMediaQuery(filterPredicates: predicates)
-//    query.addFilterPredicate(albumFilter)
+    let albumFilter = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [albumFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
+    query.addFilterPredicate(albumFilter)
     
-    let predicate = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle)
-    let query = MPMediaQuery()
-    query.addFilterPredicate(predicate)
+//    let predicate = MPMediaPropertyPredicate(value: item.albumTitle, forProperty: MPMediaItemPropertyAlbumTitle)
+//    let query = MPMediaQuery()
+//    query.addFilterPredicate(predicate)
     
     return query
   }
@@ -58,14 +60,14 @@ class MediaManager: NSObject {
   // MARK: - Artist Lock Logic
   
   func getSongsWithCurrentArtistFor(item: MPMediaItem) -> MPMediaQuery {
-//    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist, comparisonType: MPMediaPredicateComparison.equalTo)
-//    let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
-//    let query = MPMediaQuery(filterPredicates: predicates)
+    let artistFilter = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [artistFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
     
     
-    let predicate = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist)
-    let query = MPMediaQuery()
-    query.addFilterPredicate(predicate)
+//    let predicate = MPMediaPropertyPredicate(value: item.artist, forProperty: MPMediaItemPropertyArtist)
+//    let query = MPMediaQuery()
+//    query.addFilterPredicate(predicate)
     
     
     return query
@@ -74,15 +76,15 @@ class MediaManager: NSObject {
   // MARK: - Genre Lock Logic
   
   func getSongsWithCurrentGenreFor(item: MPMediaItem) -> MPMediaQuery {
-//    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
-//    let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
-//    let query = MPMediaQuery(filterPredicates: predicates)
+    let genreFilter = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre, comparisonType: MPMediaPredicateComparison.equalTo)
+    let predicates: Set<MPMediaPropertyPredicate> = [genreFilter]
+    let query = MPMediaQuery(filterPredicates: predicates)
     
     
     
-    let predicate = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre)
-    let query = MPMediaQuery()
-    query.addFilterPredicate(predicate)
+//    let predicate = MPMediaPropertyPredicate(value: item.genre, forProperty: MPMediaItemPropertyGenre)
+//    let query = MPMediaQuery()
+//    query.addFilterPredicate(predicate)
 
     return query
   }
@@ -121,22 +123,28 @@ class MediaManager: NSObject {
   // MARK: - Check if the songs should continue playing from the same genre, album or atrist
   
   func hasPlayedAllSongsFromAlbumFor(song: MPMediaItem) -> Bool {
-    if let allSongsInAlbum = getSongsWithCurrentAlbumFor(item: song).items {
-      return lockedSongsContains(songs: allSongsInAlbum)
+    if song.albumTitle != nil {
+      if let allSongsInAlbum = getSongsWithCurrentAlbumFor(item: song).items {
+        return lockedSongsContains(songs: allSongsInAlbum)
+      }
     }
     return true
   }
   
   func hasPlayedAllSongsFromArtistFor(song: MPMediaItem) -> Bool {
-    if let allSongsInArtist = getSongsWithCurrentArtistFor(item: song).items {
-      return lockedSongsContains(songs: allSongsInArtist)
+    if song.artist != nil {
+      if let allSongsInArtist = getSongsWithCurrentArtistFor(item: song).items {
+        return lockedSongsContains(songs: allSongsInArtist)
+      }
     }
     return true
   }
   
   func hasPlayedAllSongsFromGenreFor(song: MPMediaItem) -> Bool {
-    if let allSongsInGenre = getSongsWithCurrentGenreFor(item: song).items {
-      return lockedSongsContains(songs: allSongsInGenre)
+    if song.genre != nil {
+      if let allSongsInGenre = getSongsWithCurrentGenreFor(item: song).items {
+        return lockedSongsContains(songs: allSongsInGenre)
+      }
     }
     return true
   }
